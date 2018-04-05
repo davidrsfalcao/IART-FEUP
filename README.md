@@ -19,8 +19,7 @@ considerados.
 O programa deve determinar o percurso ótimo para evacuar todos os turistas no menor tempo. O veículo 
 de transporte pode não possuir capacidade suficiente para transportar todos os turistas que se 
 encontram num determinado local, pelo que deve: o mesmo veículo efetuar mais que uma viagem; ou usar 
-um segundo 
-veículo.
+um segundo veículo.
 
 ```
 
