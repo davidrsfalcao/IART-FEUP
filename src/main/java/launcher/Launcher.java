@@ -1,4 +1,4 @@
-package launcher;
+package main.java.launcher;
 
 public class Launcher {
 
