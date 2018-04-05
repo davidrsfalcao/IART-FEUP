@@ -1,0 +1,26 @@
+<file>
+    <groups>
+        <people>
+            <number>10</number>
+            <location>A</location>
+        </people>
+    </groups>
+
+    <vehicles>
+        <vehicle name="vehicle 1">
+            <capacity>4</capacity>
+            <velocity>50</velocity>
+            <location>B</location>
+        </vehicle>
+
+        <vehicle name="vehicle 2">
+            <capacity>2</capacity>
+            <velocity>50</velocity>
+            <location>D</location>
+        </vehicle>
+
+    </vehicles>
+
+
+</file>
+
