@@ -91,4 +91,7 @@ fabric.properties
 hs_err_pid*
 
 
+*.DS_Store
+
+
 # End of https://www.gitignore.io/api/java,intellij
