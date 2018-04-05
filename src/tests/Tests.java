@@ -1,8 +1,8 @@
 package tests;
 
-
 import elements.People;
 import elements.Vehicle;
+
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import utils.Reader;
