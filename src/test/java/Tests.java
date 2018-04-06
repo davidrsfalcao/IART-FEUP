@@ -20,7 +20,7 @@ public class Tests {
         assertEquals(vehicle.getName(),"vehicle 1");
         assertEquals(vehicle.getCapacity(),4);
         assertEquals(vehicle.getVelocity(),50);
-        assertEquals(vehicle.getLocation(),"A");
+        assertEquals(vehicle.getLocation(),"B");
 
     }
 
