@@ -2,7 +2,6 @@
 
 
 
-
 ## A2: Pesquisa aplicada à evacuação
 **Objectivo**
 ```
