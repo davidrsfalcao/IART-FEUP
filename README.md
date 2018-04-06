@@ -1,6 +1,5 @@
-# IART-FEUP 
+# IART-FEUP [![CircleCI](https://circleci.com/gh/davidrsfalcao/IART-FEUP.svg?style=svg&circle-token=e013c47d3aca450c8b4972421c7aa46794ad3fea)](https://circleci.com/gh/davidrsfalcao/IART-FEUP)
 
-[![Build Status](http://circleci-badges-max.herokuapp.com/img/davidrsfalcao/IART-FEUP?token=)](https://circleci.com/gh/davidrsfalcao/IART-FEUP)
 
 
 
