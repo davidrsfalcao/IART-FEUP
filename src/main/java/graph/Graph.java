@@ -1,6 +1,8 @@
 package graph;
 
 
+import elements.People;
+import elements.Vehicle;
 import org.xml.sax.SAXException;
 import utils.Reader;
 
@@ -11,6 +13,9 @@ import java.util.ArrayList;
 public class Graph {
 
     private ArrayList<Point> points;
+    private ArrayList<People> groups_people;
+    private ArrayList<Vehicle> vehicles;
+
 
     public Graph(String filename){
         Reader reader = null;
@@ -26,6 +31,8 @@ public class Graph {
 
         points = reader.getPointsFromFile();
         reader.getRoutesFromFile(points);
+        vehicles = reader.getVehiclesFromFile(points);
+        groups_people = reader.getPeopleFromFile(points);
     }
 
     public ArrayList<Point> getPoints() {

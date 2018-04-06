@@ -28,40 +28,6 @@ public class Tests {
 
     }
 
-    @Test
-    public void testGetPeopleFromFile() throws ParserConfigurationException, SAXException, IOException {
-        Reader reader = new Reader("data/Test1.xml");
-
-        ArrayList<People> result = reader.getPeopleFromFile();
-        assertEquals(10, result.get(0).getNumber());
-        assertEquals("A", result.get(0).getLocation());
-
-    }
-
-    @Test
-    public void testGetVehiclesFromFile() throws IOException, SAXException, ParserConfigurationException {
-
-        Reader reader = new Reader("data/Test1.xml");
-
-        ArrayList<Vehicle> vehicles = reader.getVehiclesFromFile();
-
-        assertEquals(2,vehicles.size());
-
-        Vehicle v1 = vehicles.get(0);
-
-        assertEquals("vehicle 1", v1.getName());
-        assertEquals(4, v1.getCapacity());
-        assertEquals(50, v1.getVelocity());
-        assertEquals("B", v1.getLocation());
-
-        Vehicle v2 = vehicles.get(1);
-
-        assertEquals("vehicle 2", v2.getName());
-        assertEquals(2, v2.getCapacity());
-        assertEquals(50, v2.getVelocity());
-        assertEquals("D", v2.getLocation());
-
-    }
 
     @Test
     public void testGetPointsFromFile() throws IOException, SAXException, ParserConfigurationException {
@@ -103,6 +69,53 @@ public class Tests {
     }
 
     @Test
+    public void testGetVehiclesFromFile() throws IOException, SAXException, ParserConfigurationException {
+
+        Reader reader = new Reader("data/Test1.xml");
+        ArrayList<Point> points = reader.getPointsFromFile();
+        ArrayList<Vehicle> vehicles = reader.getVehiclesFromFile(points);
+
+        assertEquals(2,vehicles.size());
+
+        Vehicle v1 = vehicles.get(0);
+
+        assertEquals("vehicle 1", v1.getName());
+        assertEquals(4, v1.getCapacity());
+        assertEquals(50, v1.getVelocity());
+        assertEquals("B", v1.getLocation());
+
+        Vehicle v2 = vehicles.get(1);
+
+        assertEquals("vehicle 2", v2.getName());
+        assertEquals(2, v2.getCapacity());
+        assertEquals(50, v2.getVelocity());
+        assertEquals("D", v2.getLocation());
+
+        Point A = Utils.getPointByName("A",points);
+        Point D = Utils.getPointByName("D",points);
+
+        assertEquals(false, A.has_vehicle());
+        assertEquals(true, D.has_vehicle());
+        assertEquals(50, D.getVehicle().getVelocity());
+
+    }
+
+    @Test
+    public void testGetPeopleFromFile() throws ParserConfigurationException, SAXException, IOException {
+        Reader reader = new Reader("data/Test1.xml");
+        ArrayList<Point> points = reader.getPointsFromFile();
+        ArrayList<People> result = reader.getPeopleFromFile(points);
+
+        assertEquals(10, result.get(0).getNumber());
+        assertEquals("A", result.get(0).getLocation());
+
+        Point A = Utils.getPointByName("A",points);
+        assertEquals(10, A.getPeople().getNumber());
+
+
+    }
+
+    @Test
     public void testLoadGraph(){
         Graph graph = new Graph("data/Test1.xml");
 
@@ -112,7 +125,8 @@ public class Tests {
         Point A = Utils.getPointByName("A",points);
 
         assertEquals(2, A.getRoutes().size());
-        
+        assertEquals(10, A.getPeople().getNumber());
+
     }
 
 }

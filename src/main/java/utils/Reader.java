@@ -29,63 +29,6 @@ public class Reader {
         doc.getDocumentElement().normalize();
     }
 
-    public ArrayList<People> getPeopleFromFile() {
-
-        ArrayList<People> group = new ArrayList<People>();
-
-        try {
-            Node groupNode = doc.getElementsByTagName("groups").item(0);
-            NodeList peopleList = groupNode.getChildNodes();
-
-            for (int i=0; i<peopleList.getLength();i++)
-                if(peopleList.item(i).getNodeType() == Node.ELEMENT_NODE){
-                    Element eElement = (Element) peopleList.item(i);
-                    int number = Integer.parseInt(eElement.getElementsByTagName("number").item(0).getTextContent());
-                    String location = eElement.getElementsByTagName("location").item(0).getTextContent();
-                    group.add(new People(number,location));
-
-                }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return group;
-    }
-
-    public ArrayList<Vehicle> getVehiclesFromFile() {
-
-        ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-
-        try {
-            Node vehiclesNode = doc.getElementsByTagName("vehicles").item(0);
-            NodeList vehicleNodesList = vehiclesNode.getChildNodes();
-
-            for(int i=0; i<vehicleNodesList.getLength();i++){
-
-                if(vehicleNodesList.item(i).getNodeType() == Node.ELEMENT_NODE){
-                    Element eElement = (Element) vehicleNodesList.item(i);
-
-                    String name = eElement.getAttribute("name");
-                    int capacity = Integer.parseInt(eElement.getElementsByTagName("capacity").item(0).getTextContent());
-                    int velocity = Integer.parseInt(eElement.getElementsByTagName("velocity").item(0).getTextContent());
-                    String location = eElement.getElementsByTagName("location").item(0).getTextContent();
-
-                    vehicles.add(new Vehicle(name,capacity,velocity,location));
-
-                }
-
-
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return vehicles;
-    }
-
     public ArrayList<Point> getPointsFromFile(){
 
         ArrayList<Point> points = new ArrayList<Point>();
@@ -147,5 +90,68 @@ public class Reader {
         }
 
         return routes;
+    }
+
+    public ArrayList<People> getPeopleFromFile(ArrayList<Point> points) {
+
+        ArrayList<People> group = new ArrayList<People>();
+
+        try {
+            Node groupNode = doc.getElementsByTagName("groups").item(0);
+            NodeList peopleList = groupNode.getChildNodes();
+
+            for (int i=0; i<peopleList.getLength();i++)
+                if(peopleList.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) peopleList.item(i);
+                    int number = Integer.parseInt(eElement.getElementsByTagName("number").item(0).getTextContent());
+                    String location = eElement.getElementsByTagName("location").item(0).getTextContent();
+
+                    People p1 = new People(number,location);
+
+                    group.add(p1);
+                    Utils.getPointByName(location,points).addPeople(p1);
+
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return group;
+    }
+
+    public ArrayList<Vehicle> getVehiclesFromFile(ArrayList<Point> points) {
+
+        ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+
+        try {
+            Node vehiclesNode = doc.getElementsByTagName("vehicles").item(0);
+            NodeList vehicleNodesList = vehiclesNode.getChildNodes();
+
+            for(int i=0; i<vehicleNodesList.getLength();i++){
+
+                if(vehicleNodesList.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) vehicleNodesList.item(i);
+
+                    String name = eElement.getAttribute("name");
+                    int capacity = Integer.parseInt(eElement.getElementsByTagName("capacity").item(0).getTextContent());
+                    int velocity = Integer.parseInt(eElement.getElementsByTagName("velocity").item(0).getTextContent());
+                    String location = eElement.getElementsByTagName("location").item(0).getTextContent();
+
+                    Vehicle v1 = new Vehicle(name,capacity,velocity,location);
+
+                    vehicles.add(v1);
+                    Utils.getPointByName(location,points).addVehicle(v1);
+
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vehicles;
     }
 }
