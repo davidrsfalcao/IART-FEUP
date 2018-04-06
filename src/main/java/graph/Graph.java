@@ -10,7 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Graph {
+public class Graph 
 
     private ArrayList<Point> points;
     private ArrayList<People> groups_people;
