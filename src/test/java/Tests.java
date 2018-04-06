@@ -1,6 +1,7 @@
 import elements.People;
 import elements.Vehicle;
 
+import graph.Point;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import utils.Reader;
@@ -56,6 +57,20 @@ public class Tests {
         assertEquals(2, v2.getCapacity());
         assertEquals(50, v2.getVelocity());
         assertEquals("D", v2.getLocation());
+
+    }
+
+    @Test
+    public void testGetPointsFromFile() throws IOException, SAXException, ParserConfigurationException {
+
+        Reader reader = new Reader("data/Test1.xml");
+
+        ArrayList<Point> points = reader.getPointsFromFile();
+
+        assertEquals(7, points.size());
+        assertEquals("A", points.get(0).getName());
+        assertEquals("C", points.get(2).getName());
+        assertEquals("G", points.get(6).getName());
 
     }
 

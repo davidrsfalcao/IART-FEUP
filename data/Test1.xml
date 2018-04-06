@@ -1,4 +1,14 @@
 <file>
+    <points>
+        <point name="A"></point>
+        <point name="B"></point>
+        <point name="C"></point>
+        <point name="D"></point>
+        <point name="E"></point>
+        <point name="F"></point>
+        <point name="G"></point>
+    </points>
+
     <groups>
         <people>
             <number>10</number>

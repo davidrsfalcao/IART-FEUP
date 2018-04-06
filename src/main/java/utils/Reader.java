@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import elements.People;
 import elements.Vehicle;
+import graph.Point;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -84,5 +85,32 @@ public class Reader {
         }
 
         return vehicles;
+    }
+
+    public ArrayList<Point> getPointsFromFile(){
+
+        ArrayList<Point> points = new ArrayList<Point>();
+
+        try {
+            Node pointsNode = doc.getElementsByTagName("points").item(0);
+            NodeList pointsNodesList = pointsNode.getChildNodes();
+            for(int i=0; i<pointsNodesList.getLength();i++){
+
+                if(pointsNodesList.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) pointsNodesList.item(i);
+
+                    String name = eElement.getAttribute("name");
+                    points.add(new Point(name));
+
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        return points;
     }
 }
