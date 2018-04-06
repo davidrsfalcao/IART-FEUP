@@ -1,6 +1,7 @@
 # IART-FEUP 
+[](https://circleci.com/gh/davidrsfalcao/IART-FEUP.svg?style=svg)
 
-[![CircleCI](https://circleci.com/gh/davidrsfalcao/IART-FEUP.svg?style=svg)](https://circleci.com/gh/davidrsfalcao/IART-FEUP)
+
 
 ## A2: Pesquisa aplicada à evacuação
 **Objectivo**
