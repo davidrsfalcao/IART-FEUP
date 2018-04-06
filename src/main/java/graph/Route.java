@@ -2,7 +2,7 @@ package graph;
 
 public class Route {
     private Point destiny;
-    private double distance;
+    private double distance; //km
 
     public Route(Point destiny, double distance) {
         this.destiny = destiny;

@@ -9,6 +9,26 @@
         <point name="G"></point>
     </points>
 
+    <routes>
+        <route>
+            <from>A</from>
+            <to>B</to>
+            <distance>1.5</distance>
+        </route>
+
+        <route>
+            <from>A</from>
+            <to>C</to>
+            <distance>0.8</distance>
+        </route>
+
+        <route>
+            <from>C</from>
+            <to>D</to>
+            <distance>0.2</distance>
+        </route>
+    </routes>
+
     <groups>
         <people>
             <number>10</number>
@@ -30,6 +50,5 @@
         </vehicle>
 
     </vehicles>
-
 
 </file>

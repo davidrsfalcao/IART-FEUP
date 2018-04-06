@@ -1,10 +1,13 @@
 import elements.People;
 import elements.Vehicle;
 
+import graph.Graph;
 import graph.Point;
+import graph.Route;
 import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXException;
 import utils.Reader;
+import utils.Utils;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -72,6 +75,44 @@ public class Tests {
         assertEquals("C", points.get(2).getName());
         assertEquals("G", points.get(6).getName());
 
+        String name = "D";
+        Point point = Utils.getPointByName(name,points);
+        assertEquals(name, point.getName());
+
+    }
+
+    @Test
+    public void testGetRoutesFromFile() throws IOException, SAXException, ParserConfigurationException {
+
+        Reader reader = new Reader("data/Test1.xml");
+        ArrayList<Point> points = reader.getPointsFromFile();
+        ArrayList<Route> routes = reader.getRoutesFromFile(points);
+
+        assertEquals(3,routes.size());
+
+        Point A = Utils.getPointByName("A", points);
+
+        assertEquals(2,A.getRoutes().size());
+
+        Point B = Utils.getPointByName("B", points);
+
+        assertEquals(B, A.getRoutes().get(0).getDestiny());
+        assertEquals(1.5, A.getRoutes().get(0).getDistance());
+        assertEquals(new ArrayList<Route>(),B.getRoutes());
+
+    }
+
+    @Test
+    public void testLoadGraph(){
+        Graph graph = new Graph("data/Test1.xml");
+
+        assertEquals(7,graph.getPoints().size());
+
+        ArrayList<Point> points = graph.getPoints();
+        Point A = Utils.getPointByName("A",points);
+
+        assertEquals(2, A.getRoutes().size());
+        
     }
 
 }

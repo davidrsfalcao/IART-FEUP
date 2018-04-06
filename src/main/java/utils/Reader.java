@@ -10,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import elements.People;
 import elements.Vehicle;
 import graph.Point;
+import graph.Route;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
@@ -20,7 +21,6 @@ public class Reader {
 
     private Document doc;
 
-
     public Reader(String filename) throws ParserConfigurationException, IOException, SAXException {
         File inputFile = new File(filename);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -28,7 +28,6 @@ public class Reader {
         doc = dBuilder.parse(inputFile);
         doc.getDocumentElement().normalize();
     }
-
 
     public ArrayList<People> getPeopleFromFile() {
 
@@ -105,12 +104,48 @@ public class Reader {
                 }
             }
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
         return points;
+    }
+
+    public ArrayList<Route> getRoutesFromFile(ArrayList<Point> points){
+
+        ArrayList<Route> routes = new ArrayList<Route>();
+
+        try {
+            Node routesNode = doc.getElementsByTagName("routes").item(0);
+            NodeList routeNodesList = routesNode.getChildNodes();
+
+            for(int i=0; i<routeNodesList.getLength();i++){
+
+                if(routeNodesList.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) routeNodesList.item(i);
+
+                    String originS = eElement.getElementsByTagName("from").item(0).getTextContent();
+                    String destinyS = eElement.getElementsByTagName("to").item(0).getTextContent();
+                    double distance = Double.parseDouble(eElement.getElementsByTagName("distance").item(0).getTextContent());
+
+                    Point origin = Utils.getPointByName(originS,points);
+                    Point destiny = Utils.getPointByName(destinyS,points);
+
+                    Route route = new Route(destiny, distance);
+
+                    origin.addRoute(route);
+                    routes.add(route);
+
+                }
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return routes;
     }
 }

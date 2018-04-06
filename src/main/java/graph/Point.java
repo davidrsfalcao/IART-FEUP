@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Point {
     private String name;
-    private ArrayList<Route> routes;
+    private ArrayList<Route> routes = new ArrayList<Route>();
     private boolean has_vehicle = false;
     private Vehicle vehicle;
 
