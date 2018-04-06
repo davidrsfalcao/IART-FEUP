@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IART-FEUP.iml" filepath="$PROJECT_DIR$/IART-FEUP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/evacuation-plan.iml" filepath="$PROJECT_DIR$/evacuation-plan.iml" />
     </modules>
   </component>
 </project>

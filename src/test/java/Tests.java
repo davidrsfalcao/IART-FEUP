@@ -1,5 +1,3 @@
-package tests;
-
 import elements.People;
 import elements.Vehicle;
 
@@ -8,12 +6,14 @@ import org.xml.sax.SAXException;
 import utils.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Tests {
+
     @Test
     public void testVehicle(){
         Vehicle vehicle = new Vehicle("vehicle 1",4,50, "A");
@@ -26,7 +26,7 @@ public class Tests {
 
     @Test
     public void testGetPeopleFromFile() throws ParserConfigurationException, SAXException, IOException {
-        Reader reader = new Reader(getClass().getResource("test1.xml").getPath());
+        Reader reader = new Reader("data/Test1.xml");
 
         ArrayList<People> result = reader.getPeopleFromFile();
         assertEquals(10, result.get(0).getNumber());
@@ -36,7 +36,8 @@ public class Tests {
 
     @Test
     public void testGetVehiclesFromFile() throws IOException, SAXException, ParserConfigurationException {
-        Reader reader = new Reader(getClass().getResource("test1.xml").getPath());
+
+        Reader reader = new Reader("data/Test1.xml");
 
         ArrayList<Vehicle> vehicles = reader.getVehiclesFromFile();
 

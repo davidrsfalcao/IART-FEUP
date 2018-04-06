@@ -1,7 +1,5 @@
 package utils;
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,13 +38,13 @@ public class Reader {
             NodeList peopleList = groupNode.getChildNodes();
 
             for (int i=0; i<peopleList.getLength();i++)
-            if(peopleList.item(i).getNodeType() == Node.ELEMENT_NODE){
-                Element eElement = (Element) peopleList.item(i);
-                int number = Integer.parseInt(eElement.getElementsByTagName("number").item(0).getTextContent());
-                String location = eElement.getElementsByTagName("location").item(0).getTextContent();
-                group.add(new People(number,location));
+                if(peopleList.item(i).getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) peopleList.item(i);
+                    int number = Integer.parseInt(eElement.getElementsByTagName("number").item(0).getTextContent());
+                    String location = eElement.getElementsByTagName("location").item(0).getTextContent();
+                    group.add(new People(number,location));
 
-            }
+                }
 
         } catch (Exception e) {
             e.printStackTrace();
