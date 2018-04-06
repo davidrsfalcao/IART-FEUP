@@ -1,4 +1,4 @@
-# IART-FEUP [![CircleCI](https://circleci.com/gh/davidrsfalcao/IART-FEUP.svg?style=svg&circle-token=e013c47d3aca450c8b4972421c7aa46794ad3fea)](https://circleci.com/gh/davidrsfalcao/IART-FEUP)
+# IART-FEUP [![CircleCI](https://circleci.com/gh/davidrsfalcao/IART-FEUP.svg?style=svg&circle-token=e013c47d3aca450c8b4972421c7aa46794ad3fea)](https://circleci.com/gh/davidrsfalcao/IART-FEUP) [![Build Status](https://travis-ci.com/davidrsfalcao/IART-FEUP.svg?token=C6xRbcS3ihWjtStee4Yn&branch=master)](https://travis-ci.com/davidrsfalcao/IART-FEUP)
 
 
 
