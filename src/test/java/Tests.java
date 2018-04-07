@@ -116,6 +116,16 @@ public class Tests {
     }
 
     @Test
+    public void getSafePointFromFile() throws IOException, SAXException, ParserConfigurationException {
+        Reader reader = new Reader("data/Test1.xml");
+        ArrayList<Point> points = reader.getPointsFromFile();
+        Point safe_point = reader.getSafePointFromFile(points);
+
+        assertEquals("E", safe_point.getName());
+
+    }
+
+    @Test
     public void testLoadGraph(){
         Graph graph = new Graph("data/Test1.xml");
 
@@ -126,7 +136,26 @@ public class Tests {
 
         assertEquals(2, A.getRoutes().size());
         assertEquals(10, A.getPeople().getNumber());
+        assertEquals("E", graph.getSafe_point().getName());
 
     }
 
+    @Test
+    public void testRescuePeoplePoint() {
+        Graph graph = new Graph("data/Test1.xml");
+        ArrayList<Point> points = graph.getPoints();
+        Point A = Utils.getPointByName("A",points);
+        int empty_seats;
+
+        empty_seats = A.rescuePeople(4);
+
+        assertEquals(6, A.getPeople().getNumber());
+        assertEquals(0, empty_seats);
+
+        empty_seats = A.rescuePeople(7);
+
+        assertEquals(0, A.getPeople().getNumber());
+        assertEquals(1, empty_seats);
+
+    }
 }

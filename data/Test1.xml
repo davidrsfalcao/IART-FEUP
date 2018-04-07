@@ -9,6 +9,8 @@
         <point name="G"></point>
     </points>
 
+    <safe_point>E</safe_point>
+
     <routes>
         <route>
             <from>A</from>

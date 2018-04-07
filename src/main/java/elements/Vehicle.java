@@ -5,6 +5,7 @@ public class Vehicle {
     private int capacity;
     private int velocity;
     private String location;
+    private float delay = 0;
 
     public Vehicle(String name, int capacity, int velocity, String location) {
         this.name = name;
@@ -28,4 +29,5 @@ public class Vehicle {
     public String getLocation() {
         return location;
     }
+
 }

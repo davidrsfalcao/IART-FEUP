@@ -16,4 +16,8 @@ public class People {
     public String getLocation() {
         return location;
     }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 }

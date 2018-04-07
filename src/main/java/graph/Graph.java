@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Graph {
 
     private ArrayList<Point> points;
+    private Point safe_point;
     private ArrayList<People> groups_people;
     private ArrayList<Vehicle> vehicles;
 
@@ -33,9 +34,15 @@ public class Graph {
         reader.getRoutesFromFile(points);
         vehicles = reader.getVehiclesFromFile(points);
         groups_people = reader.getPeopleFromFile(points);
+        safe_point = reader.getSafePointFromFile(points);
+
     }
 
     public ArrayList<Point> getPoints() {
         return points;
+    }
+
+    public Point getSafe_point() {
+        return safe_point;
     }
 }

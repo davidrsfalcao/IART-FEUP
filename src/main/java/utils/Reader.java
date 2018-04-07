@@ -154,4 +154,19 @@ public class Reader {
 
         return vehicles;
     }
+
+    public Point getSafePointFromFile(ArrayList<Point> points){
+
+        try {
+            Node safe_points = doc.getElementsByTagName("safe_point").item(0);
+            String point = safe_points.getTextContent();
+            Point safe_point = Utils.getPointByName(point, points);
+            return safe_point;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

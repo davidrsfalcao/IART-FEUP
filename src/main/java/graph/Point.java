@@ -12,6 +12,7 @@ public class Point {
     private boolean has_people = false;
     private Vehicle vehicle;
     private People people;
+    private boolean safe_point = false;
 
     public Point(String name) {
         this.name = name;
@@ -53,5 +54,19 @@ public class Point {
 
     public boolean has_people(){
         return has_people;
+    }
+
+    public int rescuePeople(int number){
+        int actual = people.getNumber();
+        int empty_seats = 0;
+
+        if(number >= actual){
+            people.setNumber(0);
+            has_people = false;
+            empty_seats = number - actual;
+        }
+        else people.setNumber(actual-number);
+
+        return empty_seats;
     }
 }
