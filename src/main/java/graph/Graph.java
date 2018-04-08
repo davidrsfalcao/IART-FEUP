@@ -78,7 +78,9 @@ public class Graph {
 
 			for( Route r : routes ) {
 
-				g.addEdge(r.getName(), p.getName(), r.getDestiny().getName());
+				if(! g.containsEdge(r.getName())) {
+					g.addEdge(r.getName(), p.getName(), r.getDestiny().getName());
+				}
 			}
 		}
 

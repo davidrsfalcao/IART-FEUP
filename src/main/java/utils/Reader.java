@@ -76,10 +76,14 @@ public class Reader {
                     Point origin = Utils.getPointByName(originS,points);
                     Point destiny = Utils.getPointByName(destinyS,points);
 
-                    Route route = new Route(destiny, distance,name);
+
+                    Route route = new Route(destiny, distance, name);
+                    Route route1 = new Route(origin, distance, name);
 
                     origin.addRoute(route);
+                    destiny.addRoute(route1);
                     routes.add(route);
+                    routes.add(route1);
 
                 }
 

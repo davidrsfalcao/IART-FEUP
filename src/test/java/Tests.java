@@ -54,7 +54,7 @@ public class Tests {
         ArrayList<Point> points = reader.getPointsFromFile();
         ArrayList<Route> routes = reader.getRoutesFromFile(points);
 
-        assertEquals(3,routes.size());
+        assertEquals(6,routes.size());
 
         Point A = Utils.getPointByName("A", points);
 
@@ -64,7 +64,7 @@ public class Tests {
 
         assertEquals(B, A.getRoutes().get(0).getDestiny());
         assertEquals(1.5, A.getRoutes().get(0).getDistance());
-        assertEquals(new ArrayList<Route>(),B.getRoutes());
+        assertEquals(A,B.getRoutes().get(0).getDestiny());
 
     }
 
