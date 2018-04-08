@@ -76,9 +76,12 @@ public class Reader {
                     Point destiny = Utils.getPointByName(destinyS,points);
 
                     Route route = new Route(destiny, distance);
+                    Route route1 = new Route(origin, distance);
 
                     origin.addRoute(route);
+                    destiny.addRoute(route1);
                     routes.add(route);
+                    routes.add(route1);
 
                 }
 
