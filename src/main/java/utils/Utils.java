@@ -1,6 +1,7 @@
 package utils;
 
 import graph.Point;
+import graph.Route;
 
 import java.util.ArrayList;
 
@@ -16,5 +17,20 @@ public class Utils {
         }
         return null;
     }
+    
+    public static Route getEdgeByName(String name, ArrayList<Point> points){
 
+        for(Point p : points){
+        	
+            ArrayList<Route> routes = p.getRoutes();
+            
+            for(Route r : routes) {
+            	
+            	 if(r.getName().equals(name)){
+                     return r;
+                 }
+            }
+        }
+        return null;
+    }
 }

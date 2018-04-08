@@ -71,11 +71,12 @@ public class Reader {
                     String originS = eElement.getElementsByTagName("from").item(0).getTextContent();
                     String destinyS = eElement.getElementsByTagName("to").item(0).getTextContent();
                     double distance = Double.parseDouble(eElement.getElementsByTagName("distance").item(0).getTextContent());
-
+                    String name = eElement.getElementsByTagName("name").item(0).getTextContent();
+                    
                     Point origin = Utils.getPointByName(originS,points);
                     Point destiny = Utils.getPointByName(destinyS,points);
 
-                    Route route = new Route(destiny, distance);
+                    Route route = new Route(destiny, distance,name);
 
                     origin.addRoute(route);
                     routes.add(route);
