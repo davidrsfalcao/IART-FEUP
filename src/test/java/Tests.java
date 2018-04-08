@@ -63,7 +63,7 @@ public class Tests {
         Point B = Utils.getPointByName("B", points);
 
         assertEquals(B, A.getRoutes().get(0).getDestiny());
-        assertEquals(1.5, A.getRoutes().get(0).getDistance());
+        assertEquals(200, A.getRoutes().get(0).getDistance());
         assertEquals(A,B.getRoutes().get(0).getDestiny());
 
     }

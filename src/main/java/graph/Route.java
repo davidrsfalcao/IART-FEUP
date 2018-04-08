@@ -2,10 +2,10 @@ package graph;
 
 public class Route {
     private Point destiny;
-    private double distance; //km
+    private int distance; //km
     private String name;
 
-    public Route(Point destiny, double distance, String name) {
+    public Route(Point destiny, int distance, String name) {
         this.destiny = destiny;
         this.distance = distance;
         this.name = name;
@@ -15,7 +15,7 @@ public class Route {
         return destiny;
     }
 
-    public double getDistance() {
+    public int getDistance() {
         return distance;
     }
 
