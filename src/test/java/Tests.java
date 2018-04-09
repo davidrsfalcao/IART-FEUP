@@ -44,6 +44,8 @@ public class Tests {
         String name = "D";
         Point point = Utils.getPointByName(name,points);
         assertEquals(name, point.getName());
+        assertEquals(700, point.getX());
+        assertEquals(700, point.getY());
 
     }
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Point {
     private String name;
+    private int x,y;
     private ArrayList<Route> routes = new ArrayList<Route>();
     private boolean has_vehicle = false;
     private boolean has_people = false;
@@ -14,12 +15,22 @@ public class Point {
     private People people;
     private boolean safe_point = false;
 
-    public Point(String name) {
+    public Point(String name, int x, int y) {
         this.name = name;
+        this.x = x;
+        this.y = y;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public ArrayList<Route> getRoutes() {

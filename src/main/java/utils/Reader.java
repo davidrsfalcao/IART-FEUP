@@ -42,7 +42,10 @@ public class Reader {
                     Element eElement = (Element) pointsNodesList.item(i);
 
                     String name = eElement.getAttribute("name");
-                    points.add(new Point(name));
+                    int x = Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent());
+                    int y = Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent());
+
+                    points.add(new Point(name,x,y));
 
                 }
             }
