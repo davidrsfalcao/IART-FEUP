@@ -85,7 +85,7 @@ public class Graph {
 		}
 
 
-		System.out.println("The graph g = " + g.toString());
+		//System.out.println("The graph g = " + g.toString());
 
 		printGraph(g); 
 
