@@ -3,8 +3,6 @@
 
 Trabalho prático de Inteligência Artificial, FEUP
 
-***
-
 
 ## A2: Pesquisa aplicada à evacuação
 
@@ -12,6 +10,7 @@ Trabalho prático de Inteligência Artificial, FEUP
 1. [Objetivo](#objetivo)
 2. [Descrição](#descrição)
 3. [Entrega Intercalar](#entrega-intercalar)
+4. [Developers](#developers)
 
 ### Objetivo
 ```
