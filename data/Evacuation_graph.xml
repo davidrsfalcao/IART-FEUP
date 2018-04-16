@@ -1,0 +1,150 @@
+<file>
+    <points>
+        <point name="A">
+            <x>200</x>
+            <y>200</y>
+        </point>
+
+        <point name="B">
+            <x>400</x>
+            <y>200</y>
+        </point>
+
+        <point name="C">
+            <x>400</x>
+            <y>200</y>
+        </point>
+
+        <point name="D">
+            <x>700</x>
+            <y>700</y>
+        </point>
+
+        <point name="E">
+            <x>500</x>
+            <y>500</y>
+        </point>
+
+        <point name="F">
+            <x>100</x>
+            <y>700</y>
+        </point>
+
+        <point name="G">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="H">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="I">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="J">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="K">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="L">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="M">
+            <x>800</x>
+            <y>800</y>
+        </point>
+
+        <point name="N">
+            <x>800</x>
+            <y>800</y>
+        </point>
+    </points>
+
+    <safe_point>E</safe_point>
+
+    <routes>
+        <route>
+            <from>A</from>
+            <to>B</to>
+            <distance>200</distance>
+            <name>Rua AB</name>
+        </route>
+
+        <route>
+            <from>A</from>
+            <to>C</to>
+            <distance>100</distance>
+            <name>Rua AC</name>
+        </route>
+
+        <route>
+            <from>A</from>
+            <to>L</to>
+            <distance>1500</distance>
+            <name>Rua AL</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>D</to>
+            <distance>100</distance>
+            <name>Rua BD</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>F</to>
+            <distance>300</distance>
+            <name>Rua BF</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>H</to>
+            <distance>900</distance>
+            <name>Rua BH</name>
+        </route>
+
+        <route>
+            <from>C</from>
+            <to>D</to>
+            <distance>600</distance>
+            <name>Rua CD</name>
+        </route>
+
+    </routes>
+
+    <groups>
+        <people>
+            <number>10</number>
+            <location>A</location>
+        </people>
+    </groups>
+
+    <vehicles>
+        <vehicle name="vehicle 1">
+            <capacity>4</capacity>
+            <velocity>50</velocity>
+            <location>B</location>
+        </vehicle>
+
+        <vehicle name="vehicle 2">
+            <capacity>2</capacity>
+            <velocity>50</velocity>
+            <location>D</location>
+        </vehicle>
+
+    </vehicles>
+
+</file>

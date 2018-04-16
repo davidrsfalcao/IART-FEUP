@@ -1,0 +1,98 @@
+<file>
+    <points>
+        <point name="A">
+            <x>200</x>
+            <y>200</y>
+        </point>
+
+        <point name="B">
+            <x>400</x>
+            <y>400</y>
+        </point>
+
+        <point name="C">
+            <x>600</x>
+            <y>200</y>
+        </point>
+
+        <point name="D">
+            <x>200</x>
+            <y>600</y>
+        </point>
+
+        <point name="E">
+            <x>600</x>
+            <y>600</y>
+        </point>
+
+    </points>
+
+    <safe_point>E</safe_point>
+
+    <routes>
+        <route>
+            <from>A</from>
+            <to>B</to>
+            <distance>600</distance>
+            <name>rua AB</name>
+        </route>
+
+        <route>
+            <from>A</from>
+            <to>C</to>
+            <distance>200</distance>
+            <name>rua AC</name>
+        </route>
+
+        <route>
+            <from>A</from>
+            <to>D</to>
+            <distance>700</distance>
+            <name>rua AD</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>C</to>
+            <distance>370</distance>
+            <name>rua BC</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>D</to>
+            <distance>90</distance>
+            <name>rua BD</name>
+        </route>
+
+        <route>
+            <from>B</from>
+            <to>E</to>
+            <distance>120</distance>
+            <name>rua BE</name>
+        </route>
+
+        <route>
+            <from>C</from>
+            <to>E</to>
+            <distance>150</distance>
+            <name>rua CE</name>
+        </route>
+    </routes>
+
+    <groups>
+        <people>
+            <number>4</number>
+            <location>A</location>
+        </people>
+    </groups>
+
+    <vehicles>
+        <vehicle name="vehicle 1">
+            <capacity>4</capacity>
+            <velocity>50</velocity>
+            <location>B</location>
+        </vehicle>
+    </vehicles>
+
+</file>

@@ -33,7 +33,6 @@ public class Graph {
 	private ArrayList<People> groups_people;
 	private ArrayList<Vehicle> vehicles;
 
-
 	public Graph(String filename){
 		Reader reader = null;
 		try {
@@ -61,7 +60,6 @@ public class Graph {
 	public Point getSafe_point() {
 		return safe_point;
 	}
-
 
 	public void display() {
 
@@ -103,10 +101,10 @@ public class Graph {
 				Route e = Utils.getEdgeByName(input, points);
 				return (int)e.getDistance(); 
 			}
-		}; 
+		};
 
 
-		SpringLayout<String, String> layout = new SpringLayout<String, String>( g,  edgeLength ); 
+		SpringLayout<String, String> layout = new SpringLayout<String, String>( g,  edgeLength );
 
 
 		layout.setForceMultiplier(1);
@@ -135,7 +133,6 @@ public class Graph {
 		frame.pack(); 
 		frame.setVisible(true);  
 	}
-
 
 	private void colorGraph(VisualizationViewer<String, String> vv) {
 
@@ -172,4 +169,6 @@ public class Graph {
 		vv.setGraphMouse(gm); 
 
 	}
+
+
 }
