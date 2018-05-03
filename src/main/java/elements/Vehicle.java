@@ -6,10 +6,10 @@ public class Vehicle {
     private String name;
     private int capacity;
     private int velocity;
-    private Point location;
+    private String location;
     private float delay = 0;
 
-    public Vehicle(String name, int capacity, int velocity, Point location) {
+    public Vehicle(String name, int capacity, int velocity, String location) {
         this.name = name;
         this.capacity = capacity;
         this.velocity = velocity;
@@ -24,15 +24,17 @@ public class Vehicle {
         return capacity;
     }
 
+    public void setCapacity(int capacity) { this.capacity = capacity; }
+
     public int getVelocity() {
         return velocity;
     }
 
-    public Point getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Point location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
