@@ -1,4 +1,5 @@
 import graph.Graph;
+import graph.State;
 
 public class Launcher {
 
@@ -7,10 +8,13 @@ public class Launcher {
     public static void main(String[] args) {
 
         Graph graph = new Graph(filename);
-        graph.display();
 
-       // State state = new State(graph);
-        Search.dfs(graph);
+        State state = new State(graph, filename);
+
+        graph.display(state);
+
+
+        Search.dfs(state);
     }
 }
 

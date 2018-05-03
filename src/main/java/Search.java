@@ -2,17 +2,19 @@ import elements.Vehicle;
 import graph.Graph;
 import graph.Point;
 import graph.Route;
+import graph.State;
+import utils.Utils;
 
 import java.util.ArrayList;
 
 public class Search {
 
-    public static void dfs(Graph graph) {
+    public static void dfs(State st) {
 
         ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-        vehicles.add(graph.getVehicles().get(0));
-        State st = new State(graph, graph.getPeople(), vehicles);
-        iterate(st);    //inicialmente, apenas utiliza 1 veiculo
+        vehicles.add(st.getVehicles().get(0));
+        State newState = new State(st.getGraph(), st.getPeople(), vehicles);
+        iterate(newState);    //inicialmente, apenas utiliza 1 veiculo
     }
 
     public static void iterate(State st) {
@@ -20,20 +22,21 @@ public class Search {
         Vehicle v = st.getVehicles().get(0);
         Point p = v.getLocation();
 
-        if(st.alreadyVisited(p.getName()))return;
-
-        System.out.println(st);
+        if(st.alreadyVisited(p.getName())){
+            System.out.println("The vehicle is "+p.getName());
+            System.out.println("Current path: "+st.getPath());
+            return;
+        }
 
         st.addToPath(p.getName());
 
-        ArrayList<Route> routes = p.getRoutes();
+        Point search = Utils.getPointByName(p.getName(), st.getGraph().getPoints());
+        ArrayList<Route> routes = search.getRoutes();
 
         for (Route r : routes) {
             Point dest = r.getDestiny();
-
             v.setLocation(dest);
-            iterate(st);
-
+            iterate(new State(st));
         }
 
     }

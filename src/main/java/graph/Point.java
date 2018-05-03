@@ -88,4 +88,18 @@ public class Point {
 
         return empty_seats;
     }
+
+    public boolean equals(Point other){
+        boolean result;
+
+        if((other == null) || (getClass() != other.getClass())){
+            result = false;
+        }
+        else{
+            Point otherPoint = (Point)other;
+            result = x==otherPoint.x && y==otherPoint.y && name.equals(otherPoint.name) ;
+        }
+
+        return result;
+    }
 }
