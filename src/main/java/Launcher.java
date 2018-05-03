@@ -1,6 +1,8 @@
 import graph.Graph;
 import graph.State;
 
+import java.util.ArrayList;
+
 public class Launcher {
 
     private static String filename = "data/Evacuation_graph.xml";
@@ -12,7 +14,10 @@ public class Launcher {
         State state = new State(graph, filename);
         state.displayState();
 
-        Search.dfs(state);
+        ArrayList<String> sol = Search.dfs(state);
+
+        System.out.println("Solution: "+sol.toString());
+
     }
 }
 

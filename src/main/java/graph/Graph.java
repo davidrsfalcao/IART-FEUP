@@ -60,7 +60,7 @@ public class Graph {
     }
 
 
-    public void print(ArrayList<People> groups_people, final ArrayList<Vehicle> vehicles) {
+    public void print(final ArrayList<People> groups_people, final ArrayList<Vehicle> vehicles) {
 
         SparseMultigraph<String, String> g = new SparseMultigraph<String, String>();
 
@@ -129,11 +129,24 @@ public class Graph {
                                 g.setColor(Color.pink);
                                 g.fillOval(x+10, y-10, 20, 20);
                             }
-                            else{
-                                g.setColor(Color.GRAY);
-                                g.fillOval(x, y, 20, 20);
+                        }
+
+                        if(s.equals(safe_point.getName())){
+                            g.setColor(Color.RED);
+                        }
+
+                        else  {
+                            g.setColor(Color.GRAY);
+                        }
+
+                        for(People p : groups_people){
+                            if(p.getLocation().equals(s) && p.getNumber()!=0) {
+                                g.setColor(Color.green);
                             }
                         }
+
+                        g.fillOval(x, y, 20, 20);
+
                     }
                 };
             }

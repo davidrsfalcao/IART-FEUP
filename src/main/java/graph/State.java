@@ -61,12 +61,15 @@ public class State {
 
     public ArrayList<Vehicle> getVehicles() { return vehicles; }
 
+    public ArrayList<People> getGroupsPeople(){ return groups_people; }
+
     public ArrayList<String> getPath() { return goPath; }
 
     public ArrayList<String> getReturnPath() { return returnPath; }
 
     public void clearPath() {
-        returnPath=new ArrayList<String>(this.goPath);
+        ArrayList<String> newList =new ArrayList<String>(this.goPath);
+        this.returnPath.addAll(newList);
         this.goPath=new ArrayList<String>();
     }
 
@@ -75,4 +78,16 @@ public class State {
     public String toString(){  return "go: "+goPath.toString()+"\nreturn: "+returnPath.toString();   }
 
     public void displayState(){  graph.print(groups_people, vehicles);   }
+
+    public boolean allRescued(){
+        for(People p : groups_people){
+            if(! (p.getLocation().equals(graph.getSafe_point().getName()))){
+                if( p.getNumber()!=0 ){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

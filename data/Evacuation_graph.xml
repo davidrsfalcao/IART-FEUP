@@ -41,18 +41,18 @@
         </point>
 
         <point name="I">
-            <x>800</x>
+            <x>290</x>
             <y>800</y>
         </point>
 
         <point name="J">
-            <x>800</x>
+            <x>880</x>
             <y>800</y>
         </point>
 
         <point name="K">
             <x>800</x>
-            <y>800</y>
+            <y>730</y>
         </point>
 
         <point name="L">
@@ -61,8 +61,8 @@
         </point>
 
         <point name="M">
-            <x>800</x>
-            <y>800</y>
+            <x>850</x>
+            <y>890</y>
         </point>
 
         <point name="N">
@@ -134,7 +134,7 @@
 
     <vehicles>
         <vehicle name="vehicle 1">
-            <capacity>20</capacity>
+            <capacity>6</capacity>
             <velocity>50</velocity>
             <location>B</location>
         </vehicle>
