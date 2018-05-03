@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
+
+import elements.People;
 import org.apache.commons.collections15.Transformer;
 import org.xml.sax.SAXException;
 import edu.uci.ics.jung.graph.SparseMultigraph;
@@ -58,7 +60,7 @@ public class Graph {
     }
 
 
-    public void display(final State st) {
+    public void print(ArrayList<People> groups_people, final ArrayList<Vehicle> vehicles) {
 
         SparseMultigraph<String, String> g = new SparseMultigraph<String, String>();
 
@@ -120,9 +122,9 @@ public class Graph {
 
                     public void paintIcon(Component c, Graphics g, int x, int y) {
 
-                        ArrayList<Vehicle> vehicles = st.getVehicles();
+
                         for(Vehicle v : vehicles){
-                            if(v.getLocation().equals(Utils.getPointByName(s, points))){
+                            if(v.getLocation().equals(s)){
 
                                 g.setColor(Color.pink);
                                 g.fillOval(x+10, y-10, 20, 20);

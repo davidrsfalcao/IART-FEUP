@@ -20,11 +20,11 @@ public class Tests {
 
     @Test
     public void testVehicle(){
-        Vehicle vehicle = new Vehicle("vehicle 1",4,50, new Point("A",2,2));
+        Vehicle vehicle = new Vehicle("vehicle 1",4,50, "A");
         assertEquals(vehicle.getName(),"vehicle 1");
         assertEquals(vehicle.getCapacity(),4);
         assertEquals(vehicle.getVelocity(),50);
-        assertEquals(vehicle.getLocation(),new Point("A",2,2));
+        assertEquals(vehicle.getLocation(),"A");
 
     }
 

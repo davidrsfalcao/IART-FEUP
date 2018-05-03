@@ -71,7 +71,7 @@
         </point>
     </points>
 
-    <safe_point>E</safe_point>
+    <safe_point>H</safe_point>
 
     <routes>
         <route>
@@ -128,13 +128,13 @@
     <groups>
         <people>
             <number>10</number>
-            <location>A</location>
+            <location>D</location>
         </people>
     </groups>
 
     <vehicles>
         <vehicle name="vehicle 1">
-            <capacity>4</capacity>
+            <capacity>20</capacity>
             <velocity>50</velocity>
             <location>B</location>
         </vehicle>

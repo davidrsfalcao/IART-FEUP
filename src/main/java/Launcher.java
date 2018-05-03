@@ -10,9 +10,7 @@ public class Launcher {
         Graph graph = new Graph(filename);
 
         State state = new State(graph, filename);
-
-        graph.display(state);
-
+        state.displayState();
 
         Search.dfs(state);
     }
