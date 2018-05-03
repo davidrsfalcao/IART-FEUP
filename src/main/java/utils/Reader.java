@@ -146,7 +146,10 @@ public class Reader {
                     int velocity = Integer.parseInt(eElement.getElementsByTagName("velocity").item(0).getTextContent());
                     String location = eElement.getElementsByTagName("location").item(0).getTextContent();
 
-                    Vehicle v1 = new Vehicle(name,capacity,velocity,location);
+                    //new
+                    Point loc =  Utils.getPointByName(location,points);
+
+                    Vehicle v1 = new Vehicle(name,capacity,velocity,loc);
 
                     vehicles.add(v1);
                     Utils.getPointByName(location,points).addVehicle(v1);

@@ -1,13 +1,15 @@
 package elements;
 
+import graph.Point;
+
 public class Vehicle {
     private String name;
     private int capacity;
     private int velocity;
-    private String location;
+    private Point location;
     private float delay = 0;
 
-    public Vehicle(String name, int capacity, int velocity, String location) {
+    public Vehicle(String name, int capacity, int velocity, Point location) {
         this.name = name;
         this.capacity = capacity;
         this.velocity = velocity;
@@ -26,8 +28,12 @@ public class Vehicle {
         return velocity;
     }
 
-    public String getLocation() {
+    public Point getLocation() {
         return location;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
 }

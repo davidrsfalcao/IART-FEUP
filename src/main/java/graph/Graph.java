@@ -22,11 +22,12 @@ import utils.Reader;
 import utils.Utils;
 
 
-
 public class Graph {
 
 	private ArrayList<Point> points;
 	private Point safe_point;
+    private ArrayList<People> groups_people;
+    private ArrayList<Vehicle> vehicles;
 
 	public Graph(String filename){
 		Reader reader = null;
@@ -41,10 +42,17 @@ public class Graph {
 		}
 
 		points = reader.getPointsFromFile();
+
 		reader.getRoutesFromFile(points);
 		safe_point = reader.getSafePointFromFile(points);
 
+        vehicles = reader.getVehiclesFromFile(points);
+        groups_people = reader.getPeopleFromFile(points);
 	}
+
+	public ArrayList<People> getPeople() { return groups_people; }
+
+    public ArrayList<Vehicle> getVehicles() { return vehicles; }
 
 	public ArrayList<Point> getPoints() {
 		return points;
