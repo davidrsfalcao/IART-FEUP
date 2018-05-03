@@ -6,6 +6,10 @@ import elements.Vehicle;
 import java.util.ArrayList;
 
 public class Point {
+
+    private static int count=0;
+
+    private int id;
     private String name;
     private int x,y;
     private ArrayList<Route> routes = new ArrayList<Route>();
@@ -19,11 +23,15 @@ public class Point {
         this.name = name;
         this.x = x;
         this.y = y;
+
+        this.id=++count;
     }
 
     public String getName() {
         return name;
     }
+
+    public int getId() { return id; }
 
     public int getX() {
         return x;

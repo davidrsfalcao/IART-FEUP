@@ -7,6 +7,9 @@ public class Launcher {
 
         Graph graph = new Graph(filename);
         graph.display();
+
+        State state = new State(graph, filename);
+        state.DFS();
         
      }
 }

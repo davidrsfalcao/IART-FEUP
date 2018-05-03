@@ -27,8 +27,6 @@ public class Graph {
 
 	private ArrayList<Point> points;
 	private Point safe_point;
-	private ArrayList<People> groups_people;
-	private ArrayList<Vehicle> vehicles;
 
 	public Graph(String filename){
 		Reader reader = null;
@@ -44,8 +42,6 @@ public class Graph {
 
 		points = reader.getPointsFromFile();
 		reader.getRoutesFromFile(points);
-		vehicles = reader.getVehiclesFromFile(points);
-		groups_people = reader.getPeopleFromFile(points);
 		safe_point = reader.getSafePointFromFile(points);
 
 	}

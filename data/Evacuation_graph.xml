@@ -17,12 +17,12 @@
 
         <point name="D">
             <x>700</x>
-            <y>700</y>
+            <y>500</y>
         </point>
 
         <point name="E">
-            <x>500</x>
-            <y>500</y>
+            <x>200</x>
+            <y>350</y>
         </point>
 
         <point name="F">
@@ -36,8 +36,8 @@
         </point>
 
         <point name="H">
-            <x>800</x>
-            <y>800</y>
+            <x>220</x>
+            <y>700</y>
         </point>
 
         <point name="I">
@@ -56,7 +56,7 @@
         </point>
 
         <point name="L">
-            <x>800</x>
+            <x>850</x>
             <y>800</y>
         </point>
 
@@ -66,8 +66,8 @@
         </point>
 
         <point name="N">
-            <x>800</x>
-            <y>800</y>
+            <x>100</x>
+            <y>900</y>
         </point>
     </points>
 
