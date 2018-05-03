@@ -93,5 +93,7 @@ hs_err_pid*
 
 *.DS_Store
 
+.idea/*
 
 # End of https://www.gitignore.io/api/java,intellij
+
