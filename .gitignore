@@ -9,6 +9,10 @@
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
@@ -93,7 +97,6 @@ hs_err_pid*
 
 *.DS_Store
 
-.idea/*
 
 # End of https://www.gitignore.io/api/java,intellij
 
