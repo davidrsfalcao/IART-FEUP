@@ -141,7 +141,7 @@
 
         <vehicle name="vehicle 2">
             <capacity>2</capacity>
-            <velocity>50</velocity>
+            <velocity>60</velocity>
             <location>D</location>
         </vehicle>
 

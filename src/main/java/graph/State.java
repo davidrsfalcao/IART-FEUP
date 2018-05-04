@@ -51,8 +51,15 @@ public class State {
     public State(State st) {
 
         this.graph = st.getGraph();
-        this.groups_people = new ArrayList<People>(st.getPeople());
-        this.vehicles = new ArrayList<Vehicle>(st.getVehicles());
+
+
+        this.groups_people = new ArrayList<People>(st.getPeople().size());
+        for(People p: st.getPeople()) groups_people.add( new People(p) );
+
+        //copy arraylist and contents
+        this.vehicles = new ArrayList<Vehicle>(st.getVehicles().size());
+        for(Vehicle v: st.getVehicles()) vehicles.add( new Vehicle(v) );
+
         this.goPath=new ArrayList<String>(st.getPath());
         this.returnPath=new ArrayList<String>(st.getReturnPath());
     }
@@ -75,7 +82,11 @@ public class State {
 
     public ArrayList<People> getPeople() { return groups_people; }
 
-    public String toString(){  return "go: "+goPath.toString()+"\nreturn: "+returnPath.toString();   }
+    public String toString(){
+        return "Current path: "+
+                (returnPath.isEmpty()?"":returnPath.toString()) +
+                (goPath.isEmpty()?"":goPath.toString());
+    }
 
     public void displayState(){  graph.print(groups_people, vehicles);   }
 

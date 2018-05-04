@@ -10,12 +10,24 @@ public class Vehicle {
     private String location;
     private float delay = 0;
 
+    private float totalTime; // Tempo total gasto a navegar ate estado atual
+
     public Vehicle(String name, int capacity, int velocity, String location) {
         this.name = name;
         this.capacity = capacity;
         this.velocity = velocity;
         this.location = location;
         this.currentPersons=0;
+        this.totalTime=0;
+    }
+
+    public Vehicle(Vehicle vehicle){
+        this.name=vehicle.name;
+        this.capacity = vehicle.capacity;
+        this.currentPersons=vehicle.currentPersons;
+        this.velocity=vehicle.velocity;
+        this.location=vehicle.location;
+        this.totalTime=vehicle.totalTime;
     }
 
     public String getName() {
@@ -25,6 +37,12 @@ public class Vehicle {
     public int getCapacity() {  return capacity;  }
 
     public void setCapacity(int capacity) { this.capacity = capacity; }
+
+    public void addDistance(int distance ){ this.totalTime+= distance/velocity; }
+
+    public void removeDistance(int distance) { this.totalTime -= distance/velocity;}
+
+    public float getTime() { return this.totalTime; }
 
     public int getVelocity() {
         return velocity;
@@ -52,6 +70,10 @@ public class Vehicle {
         int rescued = currentPersons;
         this.currentPersons=0;
         return rescued;
+    }
+
+    public String toString(){
+        return "Vehicle with "+this.currentPersons+" people; time: "+this.totalTime;
     }
 
 }

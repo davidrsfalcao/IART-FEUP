@@ -103,9 +103,19 @@ public class Graph {
         vv.setPreferredSize(new Dimension(1000, 1000));
 
 
+        /* print route distance in edges */
+        Transformer<String, String> EdgeLabelTransformer = new Transformer<String, String>() {
+            @Override
+            public String transform(String s) {
+
+                Route r = Utils.getEdgeByName(s, points);
+                return Integer.toString(r.getDistance());
+            }
+        };
+
         /* add the labels to the graph */
         vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setEdgeLabelTransformer(EdgeLabelTransformer);
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 
         /* print vehicles */

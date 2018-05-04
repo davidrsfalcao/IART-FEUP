@@ -14,9 +14,7 @@ public class Launcher {
         State state = new State(graph, filename);
         state.displayState();
 
-        ArrayList<String> sol = Search.dfs(state);
-
-        System.out.println("Solution: "+sol.toString());
+        Search.dfs(state);
 
     }
 }
