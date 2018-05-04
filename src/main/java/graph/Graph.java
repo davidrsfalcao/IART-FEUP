@@ -44,7 +44,7 @@ public class Graph {
         }
 
         points = reader.getPointsFromFile();
-
+        reader.getPeopleFromFile(points);
         reader.getRoutesFromFile(points);
         safe_point = reader.getSafePointFromFile(points);
 
