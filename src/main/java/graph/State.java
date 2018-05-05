@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class State {
+public class State implements Comparable<State> {
 
     private Graph graph;
     private ArrayList<People> groups_people;
     private ArrayList<Vehicle> vehicles;
-
+    private int endTime;
 
     public State(Graph graph, String filename) {
 
@@ -38,58 +38,78 @@ public class State {
     }
 
     /*
-    * Copy constructor for follow states
+     * Copy constructor for follow states
      */
     public State(State st) {
 
         graph = st.getGraph();
 
         groups_people = new ArrayList<People>(st.getPeople().size());
-        for(People p: st.getPeople()) groups_people.add( new People(p) );
+        for (People p : st.getPeople()) groups_people.add(new People(p));
 
         vehicles = new ArrayList<Vehicle>(st.getVehicles().size());
-        for(Vehicle v: st.getVehicles()) vehicles.add( new Vehicle(v) );
+        for (Vehicle v : st.getVehicles()) vehicles.add(new Vehicle(v));
 
     }
 
     /*
-    * Get the graph
-    */
-    public Graph getGraph() { return graph;  }
+     * Get the graph
+     */
+    public Graph getGraph() {
+        return graph;
+    }
 
     /*
      * Get the vehicles
      */
-    public ArrayList<Vehicle> getVehicles() { return vehicles; }
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
 
     /*
      * Get the people
      */
-    public ArrayList<People> getPeople(){ return groups_people; }
+    public ArrayList<People> getPeople() {
+        return groups_people;
+    }
 
 
     /*
      * Print state
      */
-    public String toString(){
-        String res="";
-        for(Vehicle v:vehicles){
+    public String toString() {
+        String res = "";
+        for (Vehicle v : vehicles) {
             System.out.println(v.toString());
         }
-        for(People p:groups_people){
+        for (People p : groups_people) {
             System.out.println(p.toString());
         }
         return res;
     }
 
-    public String printStats(){
-        String sb="";
-        sb+= " Final solution: ";
-        for(Vehicle v:vehicles){
-            if(v.getTotalRescued()!=0){
-                System.out.println(v.toString() + "rescued: "+v.getTotalRescued()+" persons");
+    /*
+    * Calculate total time TODO
+    * */
+    public void calculateTime() {
+        for (Vehicle v : vehicles) {
+
+            if (v.getLocation().equals(graph.getSafe_point().getName())) {
+                endTime += v.getTime();
             }
         }
+    }
+
+    public String printStats(){
+        String sb = "";
+
+        for (Vehicle v : vehicles) {
+
+            if (v.getTotalRescued() != 0) {
+                System.out.println(v.toString() + "rescued: " + v.getTotalRescued() + " persons");
+            }
+        }
+        System.out.println("Total: "+this.endTime);
 
         return sb;
     }
@@ -97,23 +117,47 @@ public class State {
     /*
      * Print state graph
      */
-    public void displayState(){  graph.print(groups_people, vehicles);  }
+    public void displayState() {
+        graph.print(groups_people, vehicles);
+    }
 
 
     /*
      * Check if final state
      */
-    public boolean allRescued(){
-        for(People p : groups_people){
-            if(! (p.getLocation().equals(graph.getSafe_point().getName()))){
-                if( p.getNumber()!=0 ){
+    public boolean inSolution() {
+        for (People p : groups_people) {
+            if (!(p.getLocation().equals(graph.getSafe_point().getName()))) {
+                if (p.getNumber() != 0) {
                     return false;
                 }
             }
         }
-        for(Vehicle v:vehicles){
-            if(v.isTransporting()) return false;
+        for (Vehicle v : vehicles) {
+            if (v.isTransporting()) return false;
+        }
+
+        //calculateTime();
+
+        return true;
+    }
+
+    /*
+     * Check if all rescued
+     */
+    public boolean allRescued() {
+        for (People p : groups_people) {
+            if (!(p.getLocation().equals(graph.getSafe_point().getName()))) {
+                if (p.getNumber() != 0) {
+                    return false;
+                }
+            }
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(State o) {
+        return endTime - o.endTime;
     }
 }

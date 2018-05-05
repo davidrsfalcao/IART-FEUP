@@ -15,6 +15,7 @@ public class Vehicle {
     private ArrayList<String> returnPath;
     private float totalTime;
     private ArrayList<Route> toGo;
+    private boolean active;
 
 
     public Vehicle(String name, int capacity, int velocity, String location) {
@@ -28,6 +29,7 @@ public class Vehicle {
         this.returnPath = new ArrayList<String>();
         toGo=new ArrayList<Route>();
         this.totalRescued=0;
+        this.active=true;
     }
 
 
@@ -42,6 +44,7 @@ public class Vehicle {
         this.returnPath=new ArrayList<String>(vehicle.getReturnPath());
         this.toGo=new ArrayList<Route>( );
         this.totalRescued = vehicle.totalRescued;
+        this.active=vehicle.active;
     }
 
 
@@ -50,6 +53,10 @@ public class Vehicle {
     public String getName() {
         return name;
     }
+
+    public boolean isActive(){ return active; }
+
+    public void stop(){ this.active=false;}
 
     public int getTotalRescued() { return totalRescued; }
 
@@ -67,15 +74,21 @@ public class Vehicle {
 
     public ArrayList<Route> getGoRoutes(){ return toGo; }
 
-    /*
-     * Get the current path
-     */
-    public ArrayList<String> getPath() { return goPath; }
+    public ArrayList<String> getReturnPath() { return returnPath; } //saved path
 
-    /*
-     * Get the saved path
-     */
-    public ArrayList<String> getReturnPath() { return returnPath; }
+    public ArrayList<String> getPath() { return goPath; }   //current path
+
+    /* setters */
+
+    public void setCapacity(int capacity) { this.capacity = capacity; }
+
+    public void addDistance(int distance ){ this.totalTime+= distance/velocity; }
+
+    public void removeDistance(int distance) { this.totalTime -= distance/velocity; }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
 
     /*
@@ -87,28 +100,27 @@ public class Vehicle {
         this.goPath=new ArrayList<String>();
     }
 
-
-
-    public void setCapacity(int capacity) { this.capacity = capacity; }
-
-    public void addDistance(int distance ){ this.totalTime+= distance; }
-
-    public void removeDistance(int distance) { this.totalTime -= distance; }
-
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
+    /*
+     * Check if the vehicle can transport n persons
+     * */
     public boolean canTransport(int number){ return capacity-number>=0; }
 
+    /*
+     * Check if the vehicle has people
+     * */
     public boolean isTransporting(){  return currentPersons!=0;  }
 
+    /*
+    * Update current persons in the vehicle
+    * */
     public void setCurrentPersons(int number){
         this.currentPersons=number;
         this.capacity= capacity-number;
     }
 
+    /*
+     * Leave people in the safe place
+     * */
     public int emptyVehicle(){
         this.capacity=capacity+currentPersons;
         int rescued = currentPersons;
@@ -117,6 +129,9 @@ public class Vehicle {
         return rescued;
     }
 
+    /*
+     * Print vehicle status
+     * */
     public String toString(){
         return this.name+" with "+this.currentPersons+" people; time: "+this.totalTime + " Current path: "+
         (returnPath.isEmpty()?"":returnPath.toString()) +

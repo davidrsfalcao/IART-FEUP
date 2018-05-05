@@ -4,23 +4,36 @@ import graph.Point;
 import graph.Route;
 import graph.State;
 import utils.Utils;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 import static java.lang.Thread.sleep;
 
 public class Search {
 
-    public static boolean debug =false;
+    public static ArrayList<State> solutions;
 
+    public static boolean debug = false;
 
+    /*
+     * dfs search
+     * */
     public static void dfs(State st) {
 
+        solutions=new ArrayList<State>();
         iterate(st);
-
+        for(State s: solutions)
+            System.out.println(s.printStats());
+        //Collections.sort(solutions);
+        System.out.println("end");
     }
 
-    public static boolean checkValidState(Vehicle v, State st){
+    /*
+     * Check if there is a loop in the path
+     * */
+    public static boolean checkValidState(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
         if (v.getPath().contains(currentPoint)) {
@@ -29,7 +42,10 @@ public class Search {
         return true;
     }
 
-    public static void checkRescuePeople(Vehicle v, State st){
+    /*
+     * Check if there are people in the vehicle location
+     * */
+    public static void checkRescuePeople(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
 
@@ -57,7 +73,7 @@ public class Search {
         }
     }
 
-    public static boolean checkSafePlace(Vehicle v, State st){
+    public static boolean checkSafePlace(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
 
@@ -65,7 +81,7 @@ public class Search {
 
             st.getPeople().add(new People(v.emptyVehicle(), currentPoint));
 
-            if (st.allRescued()) {
+            if (st.inSolution()) {
 
                 v.getPath().add(currentPoint);
                 v.clearPath();
@@ -77,45 +93,52 @@ public class Search {
                 v.clearPath();
 
             }
+
+            if (st.allRescued()) {
+                v.stop();
+            }
         }
         return false;
     }
 
     public static void iterate(State st) {
 
-
         ArrayList<Vehicle> vehicles = st.getVehicles();
 
-        boolean sol=false;
+        boolean sol = false;
 
-        for(Vehicle v : vehicles){
+        for (Vehicle v : vehicles) {
 
-            String currentPoint = v.getLocation();
+            if (v.isActive()) {
 
-            if( ! checkValidState(v, st) ) return;
+                String currentPoint = v.getLocation();
 
-            checkRescuePeople(v, st);
+                if (!checkValidState(v, st)) return;
 
-            if( checkSafePlace(v, st)) sol=true;
+                checkRescuePeople(v, st);
 
-            else v.getPath().add(currentPoint);
+                if (checkSafePlace(v, st)) sol = true;
+
+                else v.getPath().add(currentPoint);
+            }
 
         }
 
-        if(sol){
-            System.out.println(st.printStats());
+        if (sol) {
+           // System.out.println(st.printStats());
+            solutions.add(st);
             return;
         }
 
 
         /* -----------------------------*/
-        if(debug) {
+        if (debug) {
             System.out.println(st.toString());
             st.displayState();
 
 
             try {
-                sleep(10000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -125,42 +148,53 @@ public class Search {
 
 
         /* see next iterations */
-        for(Vehicle v :vehicles){
+        for (Vehicle v : vehicles) {
 
-            String currentPoint = v.getLocation();
-            Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
-            ArrayList<Route> routes = search.getRoutes();
+            if (v.isActive()) {
+                String currentPoint = v.getLocation();
+                Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
+                ArrayList<Route> routes = search.getRoutes();
 
-            for (Route r : routes) {
-                v.getGoRoutes().add(r);
+                for (Route r : routes) {
+                    v.getGoRoutes().add(r);
+                }
             }
+
         }
 
         decide(st, vehicles);
 
     }
 
-    public static void decide(State st, ArrayList<Vehicle> vehicles ){
+    public static void decide(State st, ArrayList<Vehicle> vehicles) {
 
         Vehicle v = vehicles.get(0);
 
-        for(int i=0; i< v.getGoRoutes().size(); i++){
-
-            Route decision = v.getGoRoutes().get( i );
-            v.setLocation(decision.getDestiny().getName());
-            v.addDistance(decision.getDistance());
-
-            if( vehicles.size()==1 ){
-
+        if (!v.isActive()) {
+            if (vehicles.size() == 1) {
                 iterate(new State(st));
 
+            } else {
+                decide(st, new ArrayList<Vehicle>(vehicles.subList(1, vehicles.size())));
             }
-            else{
-                decide(st, new ArrayList<Vehicle>( vehicles.subList(1, vehicles.size())));
+        } else {
+            for (int i = 0; i < v.getGoRoutes().size(); i++) {
+
+                Route decision = v.getGoRoutes().get(i);
+                v.setLocation(decision.getDestiny().getName());
+                v.addDistance(decision.getDistance());
+
+                if (vehicles.size() == 1) {
+
+                    iterate(new State(st));
+
+                } else {
+                    decide(st, new ArrayList<Vehicle>(vehicles.subList(1, vehicles.size())));
+                }
+
+                v.removeDistance(decision.getDistance());
             }
 
-            v.removeDistance(decision.getDistance());
         }
-
     }
 }

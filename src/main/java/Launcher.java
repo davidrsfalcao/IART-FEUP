@@ -11,6 +11,7 @@ public class Launcher {
         Graph graph = new Graph(filename);
 
         State state = new State(graph, filename);
+
         state.displayState();
 
         Search.dfs(state);
