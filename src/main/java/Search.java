@@ -11,37 +11,28 @@ import static java.lang.Thread.sleep;
 
 public class Search {
 
-    public static boolean debug = false;
+    public static boolean debug =false;
 
-
-    public static ArrayList<String> solution;
 
     public static void dfs(State st) {
 
-        ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-        vehicles.add(st.getVehicles().get(0));
-        State newState = new State(st.getGraph(), st.getPeople(), vehicles);
-        iterate(newState);    //inicialmente, apenas utiliza 1 veiculo
+        iterate(st);
 
     }
 
-    public static void iterate(State st) {
+    public static boolean checkValidState(Vehicle v, State st){
 
-        /* get vehicle and current point */
-        Vehicle v = st.getVehicles().get(0);
+        String currentPoint = v.getLocation();
+        if (v.getPath().contains(currentPoint)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void checkRescuePeople(Vehicle v, State st){
+
         String currentPoint = v.getLocation();
 
-
-        if (st.getPath().contains(currentPoint)) {
-            //  System.out.println("The vehicle is in: " + currentPoint);
-            //  System.out.println("Current path: " + st.getPath());
-            if(debug) System.out.println("->loop");
-            return;
-        }
-
-        if(debug)System.out.println("");
-
-        /* check people to be rescued in the current node */
         ArrayList<People> people = st.getPeople();
         for (People pp : people) {
 
@@ -50,73 +41,125 @@ public class Search {
                     !(pp.getLocation().equals(st.getGraph().getSafe_point().getName()))
                     && pp.getNumber() > 0 && v.getCapacity() != 0) {
 
-                //rescue the people !!
-
-                if(debug)System.out.println("\nRescued people!\n");
-
                 int nPeople = pp.getNumber();
                 int maxCap = v.getCapacity();
 
                 if (v.canTransport(nPeople)) {
                     v.setCurrentPersons(nPeople);
                     pp.setNumber(0);
-                } else { //transporta o maximo
+                } else {
                     v.setCurrentPersons(maxCap);
                     pp.setNumber(nPeople - maxCap);
                 }
-                st.clearPath();
+                v.clearPath();
 
             }
         }
+    }
 
-        /* check if in the safe place - leave people there */
+    public static boolean checkSafePlace(Vehicle v, State st){
+
+        String currentPoint = v.getLocation();
+
         if (st.getGraph().getSafe_point().getName().equals(currentPoint) && v.isTransporting()) {
 
-            if(debug)System.out.println("\nIn safe place people!\n");
-
-            st.getGroupsPeople().add(new People(v.emptyVehicle(), currentPoint));
+            st.getPeople().add(new People(v.emptyVehicle(), currentPoint));
 
             if (st.allRescued()) {
 
+                v.getPath().add(currentPoint);
+                v.clearPath();
 
-                st.getPath().add(currentPoint);
-                st.clearPath();
-
-                if(debug)System.out.println("\n=========\nSolution: "+st.getReturnPath().toString() + " time: "+ v.getTime()+"\n=========");
-                else System.out.println(st.getReturnPath().toString() + ";"+ v.getTime());
-
-                return;
+                return true;
 
             } else {
-              //  System.out.println("going back...");
-                st.clearPath();
+
+                v.clearPath();
 
             }
         }
+        return false;
+    }
 
-        st.getPath().add(currentPoint);
+    public static void iterate(State st) {
 
-        /* print path */
-        if(debug)System.out.print(st+" --- ");
-        if(debug)System.out.println(v);
 
-       /* st.displayState();
-        try {
-            sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        ArrayList<Vehicle> vehicles = st.getVehicles();
+
+        boolean sol=false;
+
+        for(Vehicle v : vehicles){
+
+            String currentPoint = v.getLocation();
+
+            if( ! checkValidState(v, st) ) return;
+
+            checkRescuePeople(v, st);
+
+            if( checkSafePlace(v, st)) sol=true;
+
+            else v.getPath().add(currentPoint);
+
         }
 
-*/
-        Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
-        ArrayList<Route> routes = search.getRoutes();
+        if(sol){
+            System.out.println(st.printStats());
+            return;
+        }
 
-        for (Route r : routes) {
-            Point dest = r.getDestiny();
-            v.setLocation(dest.getName());
-            v.addDistance( r.getDistance() );
-            iterate(new State(st));
-            v.removeDistance(r.getDistance());
+
+        /* -----------------------------*/
+        if(debug) {
+            System.out.println(st.toString());
+            st.displayState();
+
+
+            try {
+                sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /* -----------------------------*/
+
+
+        /* see next iterations */
+        for(Vehicle v :vehicles){
+
+            String currentPoint = v.getLocation();
+            Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
+            ArrayList<Route> routes = search.getRoutes();
+
+            for (Route r : routes) {
+                v.getGoRoutes().add(r);
+            }
+        }
+
+        decide(st, vehicles);
+
+    }
+
+    public static void decide(State st, ArrayList<Vehicle> vehicles ){
+
+        Vehicle v = vehicles.get(0);
+
+        for(int i=0; i< v.getGoRoutes().size(); i++){
+
+            Route decision = v.getGoRoutes().get( i );
+            v.setLocation(decision.getDestiny().getName());
+            v.addDistance(decision.getDistance());
+
+            if( vehicles.size()==1 ){
+
+                iterate(new State(st));
+
+            }
+            else{
+                decide(st, new ArrayList<Vehicle>( vehicles.subList(1, vehicles.size())));
+            }
+
+            v.removeDistance(decision.getDistance());
         }
 
     }

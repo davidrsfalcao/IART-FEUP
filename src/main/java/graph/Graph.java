@@ -92,6 +92,7 @@ public class Graph {
                         return new Point2D.Double((double) p.getX(), (double) p.getY());
                     }
                 }
+
                 return null;
             }
         };
@@ -113,8 +114,35 @@ public class Graph {
             }
         };
 
+        /* vertex */
+        Transformer<String, String> VertexLabelTransformer = new Transformer<String, String>() {
+            @Override
+            public String transform(String s) {
+
+                Point point = Utils.getPointByName(s, points);
+                String sb="";
+
+                for(Vehicle v : vehicles){
+                    if(v.getLocation().equals(s)){
+                        sb+=v.getName();
+                    }
+                }
+
+                for(People p : groups_people){
+                    if(p.getLocation().equals(s) && p.getNumber()!=0) {
+                        sb+=p.getNumber()+" persons";
+                    }
+                }
+
+                if(sb.equals(""))return point.getName();
+                return sb;
+            }
+        };
+
+
         /* add the labels to the graph */
-        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        //vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+        vv.getRenderContext().setVertexLabelTransformer(VertexLabelTransformer);
         vv.getRenderContext().setEdgeLabelTransformer(EdgeLabelTransformer);
         vv.getRenderer().getVertexLabelRenderer().setPosition(Position.CNTR);
 

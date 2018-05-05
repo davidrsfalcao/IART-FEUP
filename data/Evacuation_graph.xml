@@ -84,7 +84,7 @@
         <route>
             <from>A</from>
             <to>C</to>
-            <distance>100</distance>
+            <distance>170</distance>
             <name>Rua AC</name>
         </route>
 
@@ -98,7 +98,7 @@
         <route>
             <from>B</from>
             <to>D</to>
-            <distance>100</distance>
+            <distance>120</distance>
             <name>Rua BD</name>
         </route>
 
@@ -127,22 +127,22 @@
 
     <groups>
         <people>
-            <number>10</number>
+            <number>15</number>
             <location>D</location>
         </people>
     </groups>
 
     <vehicles>
         <vehicle name="vehicle 1">
-            <capacity>6</capacity>
-            <velocity>50</velocity>
+            <capacity>9</capacity>
+            <velocity>6</velocity>
             <location>B</location>
         </vehicle>
 
         <vehicle name="vehicle 2">
-            <capacity>2</capacity>
+            <capacity>4</capacity>
             <velocity>60</velocity>
-            <location>D</location>
+            <location>L</location>
         </vehicle>
 
     </vehicles>

@@ -15,8 +15,7 @@ public class State {
     private Graph graph;
     private ArrayList<People> groups_people;
     private ArrayList<Vehicle> vehicles;
-    private ArrayList<String> goPath;
-    private ArrayList<String> returnPath;
+
 
     public State(Graph graph, String filename) {
 
@@ -35,61 +34,75 @@ public class State {
 
         vehicles = reader.getVehiclesFromFile(points);
         groups_people = reader.getPeopleFromFile(points);
-
         this.graph = graph;
     }
 
-    public State(Graph g, ArrayList<People> pp, ArrayList<Vehicle> vv) {
-
-        this.graph = g;
-        this.groups_people = pp;
-        this.vehicles=vv;
-        this.goPath=new ArrayList<String>();
-        this.returnPath= new ArrayList<String>();
-    }
-
+    /*
+    * Copy constructor for follow states
+     */
     public State(State st) {
 
-        this.graph = st.getGraph();
+        graph = st.getGraph();
 
-
-        this.groups_people = new ArrayList<People>(st.getPeople().size());
+        groups_people = new ArrayList<People>(st.getPeople().size());
         for(People p: st.getPeople()) groups_people.add( new People(p) );
 
-        //copy arraylist and contents
-        this.vehicles = new ArrayList<Vehicle>(st.getVehicles().size());
+        vehicles = new ArrayList<Vehicle>(st.getVehicles().size());
         for(Vehicle v: st.getVehicles()) vehicles.add( new Vehicle(v) );
 
-        this.goPath=new ArrayList<String>(st.getPath());
-        this.returnPath=new ArrayList<String>(st.getReturnPath());
     }
 
+    /*
+    * Get the graph
+    */
     public Graph getGraph() { return graph;  }
 
+    /*
+     * Get the vehicles
+     */
     public ArrayList<Vehicle> getVehicles() { return vehicles; }
 
-    public ArrayList<People> getGroupsPeople(){ return groups_people; }
+    /*
+     * Get the people
+     */
+    public ArrayList<People> getPeople(){ return groups_people; }
 
-    public ArrayList<String> getPath() { return goPath; }
 
-    public ArrayList<String> getReturnPath() { return returnPath; }
-
-    public void clearPath() {
-        ArrayList<String> newList =new ArrayList<String>(this.goPath);
-        this.returnPath.addAll(newList);
-        this.goPath=new ArrayList<String>();
-    }
-
-    public ArrayList<People> getPeople() { return groups_people; }
-
+    /*
+     * Print state
+     */
     public String toString(){
-        return "Current path: "+
-                (returnPath.isEmpty()?"":returnPath.toString()) +
-                (goPath.isEmpty()?"":goPath.toString());
+        String res="";
+        for(Vehicle v:vehicles){
+            System.out.println(v.toString());
+        }
+        for(People p:groups_people){
+            System.out.println(p.toString());
+        }
+        return res;
     }
 
-    public void displayState(){  graph.print(groups_people, vehicles);   }
+    public String printStats(){
+        String sb="";
+        sb+= " Final solution: ";
+        for(Vehicle v:vehicles){
+            if(v.getTotalRescued()!=0){
+                System.out.println(v.toString() + "rescued: "+v.getTotalRescued()+" persons");
+            }
+        }
 
+        return sb;
+    }
+
+    /*
+     * Print state graph
+     */
+    public void displayState(){  graph.print(groups_people, vehicles);  }
+
+
+    /*
+     * Check if final state
+     */
     public boolean allRescued(){
         for(People p : groups_people){
             if(! (p.getLocation().equals(graph.getSafe_point().getName()))){
@@ -98,7 +111,9 @@ public class State {
                 }
             }
         }
+        for(Vehicle v:vehicles){
+            if(v.isTransporting()) return false;
+        }
         return true;
     }
-
 }
