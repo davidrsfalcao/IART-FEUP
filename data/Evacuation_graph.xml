@@ -77,49 +77,49 @@
         <route>
             <from>A</from>
             <to>B</to>
-            <distance>200</distance>
+            <distance>100</distance>
             <name>Rua AB</name>
         </route>
 
         <route>
             <from>A</from>
             <to>C</to>
-            <distance>170</distance>
+            <distance>100</distance>
             <name>Rua AC</name>
         </route>
 
         <route>
             <from>A</from>
             <to>L</to>
-            <distance>1500</distance>
+            <distance>100</distance>
             <name>Rua AL</name>
         </route>
 
         <route>
             <from>B</from>
             <to>D</to>
-            <distance>120</distance>
+            <distance>100</distance>
             <name>Rua BD</name>
         </route>
 
         <route>
             <from>B</from>
             <to>F</to>
-            <distance>300</distance>
+            <distance>100</distance>
             <name>Rua BF</name>
         </route>
 
         <route>
             <from>B</from>
             <to>H</to>
-            <distance>900</distance>
+            <distance>100</distance>
             <name>Rua BH</name>
         </route>
 
         <route>
             <from>C</from>
             <to>D</to>
-            <distance>600</distance>
+            <distance>100</distance>
             <name>Rua CD</name>
         </route>
 
@@ -128,7 +128,7 @@
     <groups>
         <people>
             <number>15</number>
-            <location>D</location>
+            <location>L</location>
         </people>
     </groups>
 

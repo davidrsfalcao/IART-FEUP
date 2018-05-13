@@ -14,7 +14,7 @@ public class Vehicle {
     private ArrayList<String> goPath;
     private ArrayList<String> returnPath;
     private float totalTime;
-    private ArrayList<Route> toGo;
+
     private boolean active;
 
 
@@ -27,7 +27,7 @@ public class Vehicle {
         this.totalTime=0;
         this.goPath = new ArrayList<String>();
         this.returnPath = new ArrayList<String>();
-        toGo=new ArrayList<Route>();
+
         this.totalRescued=0;
         this.active=true;
     }
@@ -42,7 +42,7 @@ public class Vehicle {
         this.totalTime=vehicle.totalTime;
         this.goPath=new ArrayList<String>(vehicle.getPath());
         this.returnPath=new ArrayList<String>(vehicle.getReturnPath());
-        this.toGo=new ArrayList<Route>( );
+
         this.totalRescued = vehicle.totalRescued;
         this.active=vehicle.active;
     }
@@ -72,7 +72,7 @@ public class Vehicle {
         return location;
     }
 
-    public ArrayList<Route> getGoRoutes(){ return toGo; }
+
 
     public ArrayList<String> getReturnPath() { return returnPath; } //saved path
 
@@ -82,9 +82,9 @@ public class Vehicle {
 
     public void setCapacity(int capacity) { this.capacity = capacity; }
 
-    public void addDistance(int distance ){ this.totalTime+= distance/velocity; }
+    public void addDistance(int distance ){ this.totalTime+= distance; }
 
-    public void removeDistance(int distance) { this.totalTime -= distance/velocity; }
+    public void removeDistance(int distance) { this.totalTime -= distance; }
 
     public void setLocation(String location) {
         this.location = location;
