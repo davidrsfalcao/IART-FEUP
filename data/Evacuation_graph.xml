@@ -69,6 +69,17 @@
             <x>100</x>
             <y>900</y>
         </point>
+
+        <point name="X">
+            <x>450</x>
+            <y>250</y>
+        </point>
+
+        <point name="Y">
+            <x>600</x>
+            <y>200</y>
+        </point>
+
     </points>
 
     <safe_point>H</safe_point>
@@ -118,31 +129,51 @@
 
         <route>
             <from>C</from>
-            <to>D</to>
+            <to>X</to>
             <distance>100</distance>
             <name>Rua CD</name>
         </route>
 
+
+        <route>
+            <from>X</from>
+            <to>Y</to>
+            <distance>100</distance>
+            <name>Rua XY</name>
+        </route>
+
+        <route>
+            <from>Y</from>
+            <to>D</to>
+            <distance>100</distance>
+            <name>Rua YD</name>
+        </route>
+
+
     </routes>
 
+
     <groups>
+
         <people>
-            <number>15</number>
-            <location>L</location>
+            <number>10</number>
+            <location>D</location>
         </people>
+
     </groups>
+
 
     <vehicles>
         <vehicle name="vehicle 1">
             <capacity>9</capacity>
             <velocity>6</velocity>
-            <location>B</location>
+            <location>A</location>
         </vehicle>
 
         <vehicle name="vehicle 2">
             <capacity>4</capacity>
             <velocity>60</velocity>
-            <location>L</location>
+            <location>X</location>
         </vehicle>
 
     </vehicles>

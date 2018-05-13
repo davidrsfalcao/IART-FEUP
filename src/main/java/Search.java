@@ -7,15 +7,12 @@ import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.SortedMap;
 
-
-import static java.lang.Thread.sleep;
 
 public class Search {
 
     public static ArrayList<State> solutions;
-
-    public static boolean debug = false;
 
     /*
      * dfs search
@@ -25,14 +22,17 @@ public class Search {
         solutions = new ArrayList<State>();
         iterate(st);
 
-        if(solutions.size()==0){
+        if (solutions.size() == 0) {
             System.out.println("Solution not found!");
-        }
-        else{
+        } else {
 
-            Collections.sort(solutions);
+            /*Collections.sort(solutions);
             System.out.println(solutions.get(0).printStats());
-            System.out.println("end");
+            System.out.println("end");*/
+
+            for(State s : solutions){
+                System.out.println(s.printStats());
+            }
         }
 
     }
@@ -150,17 +150,17 @@ public class Search {
         int vh_index = st.getNextVehicle();
         Vehicle vh = vehicles.get(vh_index);
 
+        // check this vehicle as moved
+        Boolean[] moved_vehicles = st.getMovedVehicles();
+        moved_vehicles[vh_index] = true;
+        st.setLastMoved(vh_index);
+
+
         if (vh.isActive()) {
 
             String currentPoint = vh.getLocation();
             Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
             ArrayList<Route> routes = search.getRoutes();
-
-
-            Boolean[] moved_vehicles = st.getMovedVehicles();
-            moved_vehicles[vh_index] = true;
-            st.setLastMoved(vh_index);
-
 
             for (Route r : routes) {
 
@@ -180,7 +180,14 @@ public class Search {
                 vh.removeDistance(r.getDistance());
 
             }
+
         }
+        else{
+
+            next_states(st, vehicles);  //the vehicle is in the same location
+
+        }
+
     }
 
 
@@ -198,12 +205,11 @@ public class Search {
             if (checkState(v, st)) {        // no more follow states
                 return;
             }
-        }
-        else{
+        } else {
 
             //evaluate the first state
 
-            for(Vehicle vh: vehicles){
+            for (Vehicle vh : vehicles) {
                 checkState(vh, st);
             }
 

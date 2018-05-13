@@ -1,6 +1,8 @@
 import graph.Graph;
 import graph.State;
 
+import static java.lang.Thread.sleep;
+
 
 public class Launcher {
 
@@ -13,6 +15,12 @@ public class Launcher {
         State state = new State(graph, filename);
 
         state.displayState();
+
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Search.dfs(state);
 

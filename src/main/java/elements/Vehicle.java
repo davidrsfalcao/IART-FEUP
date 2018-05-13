@@ -133,7 +133,7 @@ public class Vehicle {
      * Print vehicle status
      * */
     public String toString(){
-        return this.name+" with "+this.currentPersons+" people; time: "+this.totalTime + " Current path: "+
+        return this.name+" with "+this.currentPersons+" people; Time: "+this.totalTime + " Path: "+
         (returnPath.isEmpty()?"":returnPath.toString()) +
                 (goPath.isEmpty()?"":goPath.toString());
     }
