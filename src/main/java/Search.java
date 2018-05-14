@@ -1,5 +1,4 @@
-import com.ctc.wstx.util.InternCache;
-import com.sun.javafx.scene.traversal.Algorithm;
+
 import elements.People;
 import elements.Vehicle;
 import graph.Point;
@@ -19,7 +18,7 @@ public class Search {
 
     public static ArrayList<State> solutions;
 
-    public static TreeMap<Double, State> states;
+    public static Map<Double, List<State>> states;
 
     /*
      * dfs search
@@ -51,7 +50,7 @@ public class Search {
     public static void a_star(State st) {
 
         solutions = new ArrayList<State>();
-        states = new TreeMap<Double, State>();
+        states = new LinkedHashMap<Double, List<State>>();
 
         iterate(st, ALGORITHM.ASTAR);
 
@@ -67,6 +66,7 @@ public class Search {
                 System.out.println(s.printStats());
             }
         }
+        System.out.println("end");
 
     }
 
@@ -195,6 +195,16 @@ public class Search {
     }
 
 
+    public static void put(Map<Double, List<State>> map, Double key, State value) {
+        if (map.get(key) == null) {
+            List<State> list = new ArrayList<State>();
+            list.add(value);
+            map.put(key, list);
+        } else {
+            map.get(key).add(value);
+        }
+    }
+
     public static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
 
         //Heuristic - closer to destiny
@@ -215,7 +225,8 @@ public class Search {
                 st.addTime(r.getDistance());
             }
 
-            states.put(res, new State(st));
+            put(states, res, new State(st));
+
 
             if (vh_index == st.getIndexCount()) {
                 st.removeTime(r.getDistance());
@@ -229,21 +240,21 @@ public class Search {
 
     public static int compute_astar(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
 
-        if (vh.isActive()) {
+        //if (vh.isActive()) {
 
-            String currentPoint = vh.getLocation();
-            Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
-            ArrayList<Route> routes = search.getRoutes();
+        String currentPoint = vh.getLocation();
+        Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
+        ArrayList<Route> routes = search.getRoutes();
 
 
-            addNewStates(vh, vh_index, st, routes);
-            return 0;
+        addNewStates(vh, vh_index, st, routes);
+        return 0;
 
-        } else {
+        //  } else {
 
-           // next_states(st, vehicles, ALGORITHM.ASTAR);  //the vehicle is in the same location
-            return 1;
-        }
+        // next_states(st, vehicles, ALGORITHM.ASTAR);  //the vehicle is in the same location
+        //  return 1;
+        // }
     }
 
 
@@ -298,17 +309,15 @@ public class Search {
 
         } else if (alg == ALGORITHM.ASTAR) {
 
-            if( compute_astar(st, vh, vh_index, vehicles) ==0 ){
-
-                if (states.size() != 0) {
-                    State next = states.remove(states.firstKey());
-                    iterate(next, ALGORITHM.ASTAR);
-                }
-
+            if (vh.isActive()) {
+                compute_astar(st, vh, vh_index, vehicles);
             }
             else{
-                next_states(st, vehicles, ALGORITHM.ASTAR);  //the vehicle is in the same location
+
+                put(states, 345.0, new State(st));      //??????
+
             }
+
         }
 
     }
@@ -323,37 +332,73 @@ public class Search {
 
         if (toMove != -1) {
 
-            Vehicle v = vehicles.get(toMove);
+            choseNextValidState();
 
-            if (checkState(v, st)) {        // no more follow states
-
-                if (alg == ALGORITHM.DFS) {
-                    return;
-                } else {   //chose another state
-
-                    if (states.size() != 0) {
-
-                        State next = states.remove(states.firstKey());
-
-                        iterate(next, ALGORITHM.ASTAR);
-                        return;
-                    }
-
-                }
-
-            }
         } else {
 
             //evaluate the first state
 
             for (Vehicle vh : vehicles) {
-                checkState(vh, st);
+
+                checkState(vh, st); //check this state
+
             }
+
+            next_states(st, vehicles, ALGORITHM.ASTAR);
+
+            iterate(st, ALGORITHM.ASTAR);
 
         }
 
-        next_states(st, vehicles, alg);          // create follow states
 
+    }
+
+
+    public static void choseNextValidState() {
+
+        label:
+        while (true) {
+
+            State st = getAState();
+
+            if (st == null) {
+                return;
+            }
+
+            ArrayList<Vehicle> vehicles = st.getVehicles();
+            int toMove = st.getLastMoved();
+            Vehicle v = vehicles.get(toMove);
+
+            if (checkState(v, st)) {                                   // evaluate state
+
+                break label;  //until it finds a state
+
+            } else {
+
+                next_states(st, vehicles, ALGORITHM.ASTAR);     // create follow states
+
+                choseNextValidState();
+
+            }
+        }
+    }
+
+
+    public static State getAState() {
+
+        for (Map.Entry<Double, List<State>> entry : states.entrySet()) {
+            Double key = entry.getKey();
+            List<State> value = entry.getValue();
+
+            State st = value.remove(0);
+            if (value.size() == 0) {
+                states.remove(key, value);
+            }
+
+            return st;
+
+        }
+        return null;
     }
 
 

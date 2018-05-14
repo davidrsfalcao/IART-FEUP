@@ -22,7 +22,7 @@ public class Launcher {
             e.printStackTrace();
         }
 
-        Search.dfs(state);
+        Search.a_star(state);
 
     }
 }
