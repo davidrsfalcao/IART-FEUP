@@ -1,5 +1,5 @@
 import com.ctc.wstx.util.InternCache;
-import com.sun.javafx.scene.traversal.Algorithm;
+//import com.sun.javafx.scene.traversal.Algorithm;
 import elements.People;
 import elements.Vehicle;
 import graph.Point;
@@ -17,14 +17,14 @@ public class Search {
     }
 
 
-    public static ArrayList<State> solutions;
+    private static ArrayList<State> solutions;
 
-    public static TreeMap<Double, State> states;
+    private static TreeMap<Double, State> states;
 
     /*
      * dfs search
      * */
-    public static void dfs(State st) {
+    static void dfs(State st) {
 
         solutions = new ArrayList<State>();
         iterate(st, ALGORITHM.DFS);
@@ -73,19 +73,18 @@ public class Search {
     /*
      * Check if there is a loop in the path
      * */
-    public static boolean checkValidState(Vehicle v) {
+    private static boolean checkValidState(Vehicle v) {
 
         String currentPoint = v.getLocation();
-        if (v.getPath().contains(currentPoint)) {
-            return false;
-        }
-        return true;
+
+        return !v.getPath().contains(currentPoint);
+
     }
 
     /*
      * Check if there are people in the vehicle location
      * */
-    public static void checkRescuePeople(Vehicle v, State st) {
+    private static void checkRescuePeople(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
 
@@ -118,7 +117,7 @@ public class Search {
     /*
      * Check if the vehicle is in the safe place, and if is an end state
      */
-    public static boolean checkSafePlace(Vehicle v, State st) {
+    private static boolean checkSafePlace(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
 
@@ -154,7 +153,7 @@ public class Search {
     /*
      * Check if the state is a solution/valid/invalid
      */
-    public static boolean checkState(Vehicle v, State st) {
+    private static boolean checkState(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
 
@@ -186,7 +185,7 @@ public class Search {
 
 
     //https://stackoverflow.com/questions/16869920/a-heuristic-calculation-with-euclidean-distance
-    public static double calculate_distance(Point destination, Point currentNode) {
+    private static double calculate_distance(Point destination, Point currentNode) {
 
         double x = Math.pow(destination.getX() - currentNode.getX(), 2.0);
         double y = Math.pow(destination.getX() - currentNode.getX(), 2.0);
@@ -195,7 +194,7 @@ public class Search {
     }
 
 
-    public static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
+    private static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
 
         //Heuristic - closer to destiny
 
@@ -247,7 +246,7 @@ public class Search {
     }
 
 
-    public static void compute_dfs(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
+    private static void compute_dfs(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
 
         if (vh.isActive()) {
 
@@ -281,7 +280,7 @@ public class Search {
         }
     }
 
-    public static void next_states(State st, ArrayList<Vehicle> vehicles, ALGORITHM alg) {
+    private static void next_states(State st, ArrayList<Vehicle> vehicles, ALGORITHM alg) {
 
         int vh_index = st.getNextVehicle();
         Vehicle vh = vehicles.get(vh_index);
@@ -314,7 +313,7 @@ public class Search {
     }
 
 
-    public static void iterate(State st, ALGORITHM alg) {
+    private static void iterate(State st, ALGORITHM alg) {
 
 
         ArrayList<Vehicle> vehicles = st.getVehicles();
