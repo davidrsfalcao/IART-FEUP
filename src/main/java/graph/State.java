@@ -23,6 +23,7 @@ public class State implements Comparable<State> {
     private Boolean[] movedVehicles;        // moved vehicles in a state
 
     private int totalTime;                  // total time
+    private double totalCost;                  // total cost
 
 
     public State(Graph graph, String filename) {
@@ -47,6 +48,7 @@ public class State implements Comparable<State> {
         indexCount = 0;
         nextChange=-1;
         totalTime = 0;
+        totalCost=0;
 
     }
 
@@ -156,7 +158,7 @@ public class State implements Comparable<State> {
      */
     public String toString() {
         String res = "";
-        for (Vehicle v : vehicles) {
+        /*for (Vehicle v : vehicles) {
             System.out.println(v.toString());
         }
         for (People p : groups_people) {
@@ -170,7 +172,10 @@ public class State implements Comparable<State> {
         for (int i = 0; i < movedVehicles.length; i++) {
             res += movedVehicles[i] + " ";
         }
-
+*/
+        System.out.print("state " );for (Vehicle v : vehicles) {
+            System.out.println(v.toString());
+        }
         return res;
     }
 
@@ -270,9 +275,15 @@ public class State implements Comparable<State> {
         totalTime -= time;
     }
 
+    public void setCost(double c) {
+        totalCost=c;
+    }
+
+
+
 
     @Override
     public int compareTo(State o) {
-        return totalTime - o.totalTime;
+        return (int)totalCost - (int)o.totalCost;
     }
 }

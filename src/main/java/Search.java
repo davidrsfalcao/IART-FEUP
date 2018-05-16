@@ -1,10 +1,12 @@
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import elements.People;
 import elements.Vehicle;
 import graph.Point;
 import graph.Route;
 import graph.State;
 import utils.Utils;
+
 
 import java.util.*;
 
@@ -18,7 +20,7 @@ public class Search {
 
     public static ArrayList<State> solutions;
 
-    public static Map<Double, List<State>> states;
+    public static ArrayList<State> states;
 
     /*
      * dfs search
@@ -50,7 +52,7 @@ public class Search {
     public static void a_star(State st) {
 
         solutions = new ArrayList<State>();
-        states = new LinkedHashMap<Double, List<State>>();
+        states = new ArrayList<State>();
 
         iterate(st, ALGORITHM.ASTAR);
 
@@ -76,6 +78,7 @@ public class Search {
     public static boolean checkValidState(Vehicle v) {
 
         String currentPoint = v.getLocation();
+
         if (v.getPath().contains(currentPoint)) {
             return false;
         }
@@ -111,6 +114,7 @@ public class Search {
 
                 v.clearPath();
                 v.setReturn();
+
             }
         }
     }
@@ -205,6 +209,7 @@ public class Search {
         }
     }
 
+
     public static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
 
         //Heuristic - closer to destiny
@@ -213,6 +218,8 @@ public class Search {
         Point dest = Utils.getPointByName(loc, st.getGraph().getPoints());
 
         // add all the possible next states
+
+        String aux = vh.getLocation();
         for (Route r : routes) {
 
             double res = calculate_distance(r.getDestiny(), dest);
@@ -225,7 +232,10 @@ public class Search {
                 st.addTime(r.getDistance());
             }
 
-            put(states, res, new State(st));
+            st.setCost(res);
+            states.add(new State(st));
+
+           // put(states, ++dsf, new State(st));
 
 
             if (vh_index == st.getIndexCount()) {
@@ -235,6 +245,7 @@ public class Search {
             vh.removeDistance(r.getDistance());
 
         }
+
     }
 
 
@@ -315,9 +326,8 @@ public class Search {
                 compute_astar(st, vh, vh_index, vehicles);
             } else {
 
-
-                put(states, 345.0, new State(st));      //??????
-
+                //TODO cost
+                states.add(new State(st));
 
             }
 
@@ -349,6 +359,7 @@ public class Search {
 
             next_states(st, vehicles, ALGORITHM.ASTAR);
 
+
             iterate(st, ALGORITHM.ASTAR);
 
         }
@@ -372,7 +383,8 @@ public class Search {
             int toMove = st.getLastMoved();
             Vehicle v = vehicles.get(toMove);
 
-            if (v.isActive() && checkState(v, st)) {              // evaluate state
+
+            if (  checkState(v, st) && v.isActive() ) {              // evaluate state
 
                 break label;  //until it finds a state
 
@@ -389,19 +401,10 @@ public class Search {
 
     public static State getAState() {
 
-        for (Map.Entry<Double, List<State>> entry : states.entrySet()) {
-            Double key = entry.getKey();
-            List<State> value = entry.getValue();
-
-            State st = value.remove(0);
-            if (value.size() == 0) {
-                states.remove(key, value);
-            }
-
-            return st;
-
-        }
-        return null;
+         if(states.size()==0){
+             return null;
+         }
+         return states.remove(0);
     }
 
 
