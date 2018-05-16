@@ -292,6 +292,8 @@ public class Search {
         }
     }
 
+    public static boolean cenas = true;
+
     public static void next_states(State st, ArrayList<Vehicle> vehicles, ALGORITHM alg) {
 
         int vh_index = st.getNextVehicle();
@@ -311,10 +313,11 @@ public class Search {
 
             if (vh.isActive()) {
                 compute_astar(st, vh, vh_index, vehicles);
-            }
-            else{
+            } else {
+
 
                 put(states, 345.0, new State(st));      //??????
+
 
             }
 
@@ -369,7 +372,7 @@ public class Search {
             int toMove = st.getLastMoved();
             Vehicle v = vehicles.get(toMove);
 
-            if (checkState(v, st)) {                                   // evaluate state
+            if (v.isActive() && checkState(v, st)) {              // evaluate state
 
                 break label;  //until it finds a state
 
