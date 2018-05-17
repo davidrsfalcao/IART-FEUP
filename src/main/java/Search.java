@@ -141,7 +141,7 @@ public class Search {
                 }
 
                 v.clearPath();
-
+                v.setReturn();
 
             }
         }
@@ -169,7 +169,7 @@ public class Search {
             } else {
 
                 v.clearPath();
-
+                v.setGo();
 
             }
 
@@ -229,20 +229,46 @@ public class Search {
         return x + y;
     }
 
+    public static double get_heuristic(State st) {
 
-    public static void put(Map<Double, List<State>> map, Double key, State value) {
-        if (map.get(key) == null) {
-            List<State> list = new ArrayList<State>();
-            list.add(value);
-            map.put(key, list);
-        } else {
-            map.get(key).add(value);
+       //  System.out.print("calculating heuristic for "+st);
+
+        double sum = 0;
+
+        Point safe_p = st.getGraph().getSafe_point();
+
+        for (People pp : st.getPeople()) {
+
+            if(pp.getNumber()!=0){
+                String currentPoint = pp.getLocation();
+                Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
+
+
+                double dist = calculate_distance(safe_p, search);
+
+                sum += dist * 100 ; //edge cost
+
+            }
+
         }
-    }
 
+        for (Vehicle v : st.getVehicles()) {
+            if (v.isTransporting()) {
 
-    public static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
+                String p = v.getLocation();
+                Point search = Utils.getPointByName(p, st.getGraph().getPoints());
 
+                double dist = calculate_distance(safe_p, search);
+
+                sum += dist * 100 ;
+
+            }
+
+        }
+
+      //   System.out.println(" "+sum);
+
+        return st.getTotalTime() + sum;
 
     }
 
@@ -266,17 +292,18 @@ public class Search {
         String aux = vh.getLocation();
         for (Route r : routes) {
 
-            double res = calculate_distance(r.getDestiny(), dest);
+
 
             //add state with the corresponding cost
             vh.setLocation(r.getDestiny().getName());
             vh.addDistance(r.getDistance());
 
+
             if (vh_index == st.getIndexCount()) {
                 st.addTime(r.getDistance());
             }
 
-            st.setCost(res);
+            st.setCost(get_heuristic(new State(st)));
 
             states.add(new State(st));
 
@@ -443,9 +470,9 @@ public class Search {
             @Override
             public int compare(State o1, State o2) {
                 if (o1.getCost() < o2.getCost()) {
-                    return 1;
-                } else {
                     return -1;
+                } else {
+                    return 1;
                 }
             }
         });

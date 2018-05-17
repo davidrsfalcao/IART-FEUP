@@ -181,7 +181,8 @@ public class Vehicle {
      * */
     public String toString() {
         return this.name + " with " + this.currentPersons + " people; Time: " + this.totalTime + " Path: " +
-                finalPath.toString();
+                (returnPath.isEmpty() ? "" : returnPath.toString()) +
+                (goPath.isEmpty() ? "" : goPath.toString());
     }
 
 

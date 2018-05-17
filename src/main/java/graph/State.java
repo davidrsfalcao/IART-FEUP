@@ -275,6 +275,10 @@ public class State  {
         totalTime -= time;
     }
 
+    public int getTotalTime(){
+        return totalTime;
+    }
+
     public void setCost(double c) {
         totalCost=c;
     }
