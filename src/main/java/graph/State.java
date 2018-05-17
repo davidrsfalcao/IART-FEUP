@@ -9,8 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 
-public class State implements Comparable<State> {
-
+public class State  {
 
     private Graph graph;
     private ArrayList<People> groups_people;
@@ -76,7 +75,8 @@ public class State implements Comparable<State> {
         lastMoved = st.lastMoved;
         indexCount = st.indexCount;
         totalTime = st.totalTime;
-        nextChange=st.nextChange;
+        nextChange = st.nextChange;
+        totalCost = st.totalCost;
     }
 
     /*
@@ -279,11 +279,28 @@ public class State implements Comparable<State> {
         totalCost=c;
     }
 
-
-
+    public double getCost( ) {
+        return totalCost;
+    }
 
     @Override
-    public int compareTo(State o) {
-        return (int)totalCost - (int)o.totalCost;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        State myObject = (State) o;
+
+        for(int i=0; i<vehicles.size(); i++){
+            if(! vehicles.get(i).getFinalPath().equals(myObject.vehicles.get(i).getFinalPath())) return false;
+        }
+        return true;
     }
+
+    @Override
+    public int hashCode() {
+        return "".hashCode();
+    }
+
+
+
 }

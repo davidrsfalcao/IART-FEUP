@@ -64,6 +64,9 @@ public class Search {
             System.out.println(solutions.get(0).printStats());
             System.out.println("end");*/
 
+            filterSolutions();
+            clearSolutions();
+
             for (State s : solutions) {
                 System.out.println(s.printStats());
             }
@@ -71,6 +74,31 @@ public class Search {
         System.out.println("end");
 
     }
+
+
+    public static void clearSolutions() {
+
+
+        Set<State> hs = new HashSet<State>();
+        hs.addAll(solutions);
+        solutions.clear();
+        solutions.addAll(hs);
+
+    }
+
+
+    public static void filterSolutions() {
+
+        for (State s : solutions) {
+
+            for (Vehicle v : s.getVehicles()) {
+                v.organizePath();
+            }
+
+        }
+
+    }
+
 
     /*
      * Check if there is a loop in the path
@@ -113,7 +141,7 @@ public class Search {
                 }
 
                 v.clearPath();
-                v.setReturn();
+
 
             }
         }
@@ -125,6 +153,7 @@ public class Search {
     public static boolean checkSafePlace(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
+
 
         if (st.getGraph().getSafe_point().getName().equals(currentPoint) && v.isTransporting()) {
 
@@ -140,7 +169,7 @@ public class Search {
             } else {
 
                 v.clearPath();
-                v.setGo();
+
 
             }
 
@@ -169,11 +198,13 @@ public class Search {
         checkRescuePeople(v, st);
 
         if (checkSafePlace(v, st)) {
-            solutions.add(st);
+            solutions.add(new State(st));
             return true;            //found solution
 
         } else {
             v.getPath().add(currentPoint);
+
+
         }
 
         return false;
@@ -212,6 +243,19 @@ public class Search {
 
     public static void addNewStates(Vehicle vh, int vh_index, State st, ArrayList<Route> routes) {
 
+
+    }
+
+
+    public static int compute_astar(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
+
+        //if (vh.isActive()) {
+
+        String currentPoint = vh.getLocation();
+        Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
+        ArrayList<Route> routes = search.getRoutes();
+
+
         //Heuristic - closer to destiny
 
         String loc = st.getPeople().get(0).getLocation();
@@ -233,9 +277,11 @@ public class Search {
             }
 
             st.setCost(res);
+
             states.add(new State(st));
 
-           // put(states, ++dsf, new State(st));
+
+            // put(states, ++dsf, new State(st));
 
 
             if (vh_index == st.getIndexCount()) {
@@ -246,19 +292,7 @@ public class Search {
 
         }
 
-    }
 
-
-    public static int compute_astar(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
-
-        //if (vh.isActive()) {
-
-        String currentPoint = vh.getLocation();
-        Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
-        ArrayList<Route> routes = search.getRoutes();
-
-
-        addNewStates(vh, vh_index, st, routes);
         return 0;
 
         //  } else {
@@ -370,7 +404,7 @@ public class Search {
 
     public static void choseNextValidState() {
 
-        label:
+
         while (true) {
 
             State st = getAState();
@@ -384,13 +418,13 @@ public class Search {
             Vehicle v = vehicles.get(toMove);
 
 
-            if (  checkState(v, st) && v.isActive() ) {              // evaluate state
+            if (v.isActive() && checkState(v, st)) {              // evaluate state
 
-                break label;  //until it finds a state
+                continue;
 
             } else {
 
-                next_states(st, vehicles, ALGORITHM.ASTAR);     // create follow states
+                next_states(st, vehicles, ALGORITHM.ASTAR);         // create follow states
 
                 choseNextValidState();
 
@@ -401,11 +435,22 @@ public class Search {
 
     public static State getAState() {
 
-         if(states.size()==0){
-             return null;
-         }
-         return states.remove(0);
-    }
+        if (states.size() == 0) {
+            return null;
+        }
 
+        Collections.sort(states, new Comparator<State>() {
+            @Override
+            public int compare(State o1, State o2) {
+                if (o1.getCost() < o2.getCost()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+
+        return new State(states.remove(0));
+    }
 
 }

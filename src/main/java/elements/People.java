@@ -11,7 +11,7 @@ public class People {
 
     public People(People people){
         this.number=people.number;
-        this.location=people.location;
+        this.location=new String(people.location);
     }
 
     public int getNumber() {

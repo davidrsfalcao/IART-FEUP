@@ -12,7 +12,7 @@ public class Vehicle {
 
     private String name;
     private int capacity;
-    private int currentPersons;
+    public int currentPersons;
     private int totalRescued = 0;
     private int velocity;
     private String location;
@@ -23,6 +23,12 @@ public class Vehicle {
     private boolean active;
     private State state;
 
+    private ArrayList<String> finalPath;
+
+
+    public ArrayList<String> getFinalPath(){
+        return finalPath;
+    }
 
     public Vehicle(String name, int capacity, int velocity, String location) {
         this.name = name;
@@ -47,8 +53,16 @@ public class Vehicle {
         this.velocity = vehicle.velocity;
         this.location = vehicle.location;
         this.totalTime = vehicle.totalTime;
-        this.goPath = new ArrayList<String>(vehicle.getPath());
-        this.returnPath = new ArrayList<String>(vehicle.getReturnPath());
+
+        goPath = new ArrayList<String>(vehicle.getPath().size());
+        for (String s : vehicle.getPath()) {
+            goPath.add(new String(s));
+        }
+
+        returnPath = new ArrayList<String>(vehicle.getReturnPath().size());
+        for (String s : vehicle.getReturnPath()) {
+            returnPath.add(new String(s));
+        }
 
         this.totalRescued = vehicle.totalRescued;
         this.active = vehicle.active;
@@ -122,9 +136,11 @@ public class Vehicle {
      * Save the current path and clear
      */
     public void clearPath() {
+
         ArrayList<String> newList = new ArrayList<String>(this.goPath);
         this.returnPath.addAll(newList);
         this.goPath = new ArrayList<String>();
+
     }
 
     /*
@@ -165,8 +181,7 @@ public class Vehicle {
      * */
     public String toString() {
         return this.name + " with " + this.currentPersons + " people; Time: " + this.totalTime + " Path: " +
-                (returnPath.isEmpty() ? "" : returnPath.toString()) +
-                (goPath.isEmpty() ? "" : goPath.toString());
+                finalPath.toString();
     }
 
 
@@ -183,6 +198,24 @@ public class Vehicle {
 
         this.state = State.GO;
 
+    }
+
+
+    public void organizePath(){
+
+        finalPath = new ArrayList<String>();
+        finalPath.addAll(returnPath);
+        finalPath.addAll(goPath);
+
+
+        if(! finalPath.get(finalPath.size()-1).equals("H")){
+            for(int j=finalPath.size()-1; j>0; j--){
+                if(finalPath.get(j).equals("H")){
+                    finalPath = new ArrayList(finalPath.subList(0, j+1));
+                    return;
+                }
+            }
+        }
     }
 
 }

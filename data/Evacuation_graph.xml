@@ -156,8 +156,8 @@
     <groups>
 
         <people>
-            <number>1</number>
-            <location>F</location>
+            <number>10</number>
+            <location>D</location>
         </people>
 
     </groups>
@@ -165,11 +165,16 @@
 
     <vehicles>
         <vehicle name="vehicle 1">
-            <capacity>9</capacity>
+            <capacity>5</capacity>
+            <velocity>6</velocity>
+            <location>Y</location>
+        </vehicle>
+
+        <vehicle name="vehicle 1">
+            <capacity>2</capacity>
             <velocity>6</velocity>
             <location>A</location>
         </vehicle>
-
 
 
     </vehicles>
