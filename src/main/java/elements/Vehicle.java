@@ -1,7 +1,5 @@
 package elements;
 
-import graph.Route;
-
 import java.util.ArrayList;
 
 public class Vehicle {
@@ -13,22 +11,18 @@ public class Vehicle {
     private String name;
     private int capacity;
     public int currentPersons;
-    private int totalRescued = 0;
+    private int totalRescued;
     private int velocity;
     private String location;
-    private ArrayList<String> goPath;
-    private ArrayList<String> returnPath;
-    private float totalTime;
-
+    private float totalDistance;
     private boolean active;
     private State state;
 
+    //path
+    private ArrayList<String> goPath;
+    private ArrayList<String> returnPath;
     private ArrayList<String> finalPath;
 
-
-    public ArrayList<String> getFinalPath(){
-        return finalPath;
-    }
 
     public Vehicle(String name, int capacity, int velocity, String location) {
         this.name = name;
@@ -36,7 +30,7 @@ public class Vehicle {
         this.velocity = velocity;
         this.location = location;
         this.currentPersons = 0;
-        this.totalTime = 0;
+        this.totalDistance = 0;
         this.goPath = new ArrayList<String>();
         this.returnPath = new ArrayList<String>();
 
@@ -52,7 +46,7 @@ public class Vehicle {
         this.currentPersons = vehicle.currentPersons;
         this.velocity = vehicle.velocity;
         this.location = vehicle.location;
-        this.totalTime = vehicle.totalTime;
+        this.totalDistance = vehicle.totalDistance;
 
         goPath = new ArrayList<String>(vehicle.getPath().size());
         for (String s : vehicle.getPath()) {
@@ -92,9 +86,6 @@ public class Vehicle {
         return capacity;
     }
 
-    public float getTime() {
-        return this.totalTime;
-    }
 
     public int getVelocity() {
         return velocity;
@@ -104,32 +95,40 @@ public class Vehicle {
         return location;
     }
 
-
     public ArrayList<String> getReturnPath() {
         return returnPath;
     } //saved path
 
     public ArrayList<String> getPath() {
         return goPath;
-    }   //current path
+    }           //current path
+
+    public ArrayList<String> getFinalPath(){
+        return finalPath;
+    }   //final path
+
+    public String getState() {
+        return state.name();
+    }
 
     /* setters */
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
     public void addDistance(int distance) {
-        this.totalTime += distance;
+        this.totalDistance += distance;
     }
 
     public void removeDistance(int distance) {
-        this.totalTime -= distance;
+        this.totalDistance -= distance;
     }
 
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public void setReturn(){ this.state = State.RETURN; }
+
+    public void setGo(){ this.state = State.GO;  }
+
 
 
     /*
@@ -140,7 +139,6 @@ public class Vehicle {
         ArrayList<String> newList = new ArrayList<String>(this.goPath);
         this.returnPath.addAll(newList);
         this.goPath = new ArrayList<String>();
-
     }
 
     /*
@@ -180,28 +178,15 @@ public class Vehicle {
      * Print vehicle status
      * */
     public String toString() {
-        return this.name + " with " + this.currentPersons + " people; Time: " + this.totalTime + " Path: " +
+        return this.name + " with " + this.currentPersons + " people; Distance: " + this.totalDistance + " Path: " +
                 (returnPath.isEmpty() ? "" : returnPath.toString()) +
                 (goPath.isEmpty() ? "" : goPath.toString());
     }
 
 
-    public String getState() {
-        return state.name();
-    }
-
-    public void setReturn(){
-
-        this.state = State.RETURN;
-
-    }
-    public void setGo(){
-
-        this.state = State.GO;
-
-    }
-
-
+    /*
+     * Organizes the vehicle saved path
+     * */
     public void organizePath(){
 
         finalPath = new ArrayList<String>();

@@ -1,5 +1,4 @@
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import elements.People;
 import elements.Vehicle;
 import graph.Point;
@@ -14,79 +13,83 @@ import java.util.*;
 public class Search {
 
     public enum ALGORITHM {
-        DFS, ASTAR
+        DFS, ASTAR, BFS, BB
     }
 
+    /* The algorithm to use for the search */
+    public static ALGORITHM algorithm;
+    public static boolean one_solution;
 
+    /* Found Solutions */
     public static ArrayList<State> solutions;
 
+    /* Found states */
     public static ArrayList<State> states;
+    public static Stack<State> states_stack;
+
 
     /*
-     * dfs search
-     * */
-    public static void dfs(State st) {
+     * Search and show solution
+     */
+    public static void search(State st) {
 
-        solutions = new ArrayList<State>();
-        iterate(st, ALGORITHM.DFS);
-
-        if (solutions.size() == 0) {
-            System.out.println("Solution not found!");
+        if (algorithm == ALGORITHM.DFS) {
+            states_stack = new Stack<State>();
         } else {
 
-            /*Collections.sort(solutions);
-            System.out.println(solutions.get(0).printStats());
-            System.out.println("end");*/
-
-            for (State s : solutions) {
-                System.out.println(s.printStats());
-            }
+            states = new ArrayList<State>();
         }
-        System.out.println("end");
 
+        solutions = new ArrayList<State>();
+
+        iterate(st);
     }
 
-    /*
-     * dfs search
-     * */
-    public static void a_star(State st) {
-
-        solutions = new ArrayList<State>();
-        states = new ArrayList<State>();
-
-        iterate(st, ALGORITHM.ASTAR);
+    public static void show_solutions() {
 
         if (solutions.size() == 0) {
             System.out.println("Solution not found!");
         } else {
-
-            /*Collections.sort(solutions);
-            System.out.println(solutions.get(0).printStats());
-            System.out.println("end");*/
 
             filterSolutions();
-            clearSolutions();
 
-            for (State s : solutions) {
-                System.out.println(s.printStats());
+            if (solutions.size() == 1) {
+                System.out.println(solutions.get(0).printStats());
+
+            } else {
+                System.out.println("Found ~ " + solutions.size() + " solutions.");
+                System.out.println("Display all? (y/n)");
+
+                Scanner sc = new Scanner(System.in);
+                String str = sc.nextLine();
+
+                if (str.equals("y")) {
+                    clearSolutions();
+
+                    for (State s : solutions) {
+                        System.out.println(s.printStats());
+                    }
+                }
             }
         }
-        System.out.println("end");
 
+        System.out.println("End.");
     }
 
-
+    /*
+     * Eliminates duplicates
+     */
     public static void clearSolutions() {
 
-
-        Set<State> hs = new HashSet<State>();
-        hs.addAll(solutions);
+        Set<State> hs = new HashSet<State>(solutions);
         solutions.clear();
         solutions.addAll(hs);
 
     }
 
-
+    /*
+     * Organize the path of the vehicles
+     */
     public static void filterSolutions() {
 
         for (State s : solutions) {
@@ -94,7 +97,6 @@ public class Search {
             for (Vehicle v : s.getVehicles()) {
                 v.organizePath();
             }
-
         }
 
     }
@@ -102,7 +104,7 @@ public class Search {
 
     /*
      * Check if there is a loop in the path
-     * */
+     */
     public static boolean checkValidState(Vehicle v) {
 
         String currentPoint = v.getLocation();
@@ -113,9 +115,10 @@ public class Search {
         return true;
     }
 
+
     /*
      * Check if there are people in the vehicle location
-     * */
+     */
     public static void checkRescuePeople(Vehicle v, State st) {
 
         String currentPoint = v.getLocation();
@@ -177,8 +180,6 @@ public class Search {
                 v.stop();               //stop the vehicle
                 st.stopCountingVehicle(v);
             }
-
-
         }
         return false;
     }
@@ -204,20 +205,10 @@ public class Search {
         } else {
             v.getPath().add(currentPoint);
 
-
         }
 
         return false;
     }
-
-    /*
-     * Computes the next states
-     */
-
-    /*
-            //ordena rotas de acordo com heuristica
-
-            */
 
 
     //https://stackoverflow.com/questions/16869920/a-heuristic-calculation-with-euclidean-distance
@@ -229,9 +220,10 @@ public class Search {
         return x + y;
     }
 
+    /*
+     * Computes the heuristic for a state
+     */
     public static double get_heuristic(State st) {
-
-       //  System.out.print("calculating heuristic for "+st);
 
         double sum = 0;
 
@@ -239,14 +231,14 @@ public class Search {
 
         for (People pp : st.getPeople()) {
 
-            if(pp.getNumber()!=0){
+            if (pp.getNumber() != 0) {
                 String currentPoint = pp.getLocation();
                 Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
 
 
                 double dist = calculate_distance(safe_p, search);
 
-                sum += dist * 100 ; //edge cost
+                sum += dist * 100; //edge cost
 
             }
 
@@ -260,41 +252,30 @@ public class Search {
 
                 double dist = calculate_distance(safe_p, search);
 
-                sum += dist * 100 ;
+                sum += dist * 100;
 
             }
 
         }
-
-      //   System.out.println(" "+sum);
 
         return st.getTotalTime() + sum;
 
     }
 
 
-    public static int compute_astar(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
-
-        //if (vh.isActive()) {
+    /*
+     * Computes the next states using a*
+     */
+    public static void compute_astar(State st, Vehicle vh, int vh_index) {
 
         String currentPoint = vh.getLocation();
         Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
         ArrayList<Route> routes = search.getRoutes();
 
+        ArrayList<State> aux = new ArrayList<State>();
 
-        //Heuristic - closer to destiny
+        for (Route r : routes) {                        // add all the possible next states
 
-        String loc = st.getPeople().get(0).getLocation();
-        Point dest = Utils.getPointByName(loc, st.getGraph().getPoints());
-
-        // add all the possible next states
-
-        String aux = vh.getLocation();
-        for (Route r : routes) {
-
-
-
-            //add state with the corresponding cost
             vh.setLocation(r.getDestiny().getName());
             vh.addDistance(r.getDistance());
 
@@ -303,12 +284,15 @@ public class Search {
                 st.addTime(r.getDistance());
             }
 
-            st.setCost(get_heuristic(new State(st)));
+            st.setCost(get_heuristic(new State(st)));   // cost of the state
 
-            states.add(new State(st));
+            if (algorithm == ALGORITHM.DFS) {
+                aux.add(new State(st));
 
+            } else {
+                states.add(new State(st));                  // create a new state
 
-            // put(states, ++dsf, new State(st));
+            }
 
 
             if (vh_index == st.getIndexCount()) {
@@ -319,54 +303,18 @@ public class Search {
 
         }
 
-
-        return 0;
-
-        //  } else {
-
-        // next_states(st, vehicles, ALGORITHM.ASTAR);  //the vehicle is in the same location
-        //  return 1;
-        // }
-    }
-
-
-    public static void compute_dfs(State st, Vehicle vh, int vh_index, ArrayList<Vehicle> vehicles) {
-
-        if (vh.isActive()) {
-
-            String currentPoint = vh.getLocation();
-            Point search = Utils.getPointByName(currentPoint, st.getGraph().getPoints());
-            ArrayList<Route> routes = search.getRoutes();
-
-            for (Route r : routes) {
-
-                vh.setLocation(r.getDestiny().getName());
-                vh.addDistance(r.getDistance());
-
-                if (vh_index == st.getIndexCount()) {
-                    st.addTime(r.getDistance());
-                }
-
-                iterate(new State(st), ALGORITHM.DFS);
-
-                if (vh_index == st.getIndexCount()) {
-                    st.removeTime(r.getDistance());
-                }
-
-                vh.removeDistance(r.getDistance());
-
+        if (algorithm == ALGORITHM.DFS) {
+            Collections.reverse(aux);
+            for (State sta : aux) {
+                states_stack.push(sta);
             }
-
-        } else {
-
-            next_states(st, vehicles, ALGORITHM.DFS);  //the vehicle is in the same location
-
         }
     }
 
-    public static boolean cenas = true;
-
-    public static void next_states(State st, ArrayList<Vehicle> vehicles, ALGORITHM alg) {
+    /*
+     * Computes the next states
+     */
+    public static void next_states(State st, ArrayList<Vehicle> vehicles) {
 
         int vh_index = st.getNextVehicle();
         Vehicle vh = vehicles.get(vh_index);
@@ -377,18 +325,15 @@ public class Search {
         st.setLastMoved(vh_index);
 
 
-        if (alg == ALGORITHM.DFS) {
+        if (vh.isActive()) {
+            compute_astar(st, vh, vh_index);
 
-            compute_dfs(st, vh, vh_index, vehicles);
+        } else {
 
-        } else if (alg == ALGORITHM.ASTAR) {
-
-            if (vh.isActive()) {
-                compute_astar(st, vh, vh_index, vehicles);
+            if (algorithm == ALGORITHM.DFS) {
+                states_stack.push(new State(st));
             } else {
-
-                //TODO cost
-                states.add(new State(st));
+                states.add(new State(st));                  // create a new state
 
             }
 
@@ -396,8 +341,10 @@ public class Search {
 
     }
 
-
-    public static void iterate(State st, ALGORITHM alg) {
+    /*
+     * Search for the solution
+     */
+    public static void iterate(State st) {
 
 
         ArrayList<Vehicle> vehicles = st.getVehicles();
@@ -414,21 +361,19 @@ public class Search {
 
             for (Vehicle vh : vehicles) {
 
-                checkState(vh, st); //check this state
+                checkState(vh, st);
 
             }
 
-            next_states(st, vehicles, ALGORITHM.ASTAR);
+            next_states(st, vehicles);
 
-
-            iterate(st, ALGORITHM.ASTAR);
-
+            iterate(st);
         }
-
-
     }
 
-
+    /*
+     * Search for the solution
+     */
     public static void choseNextValidState() {
 
 
@@ -451,31 +396,55 @@ public class Search {
 
             } else {
 
-                next_states(st, vehicles, ALGORITHM.ASTAR);         // create follow states
-
-                choseNextValidState();
+                next_states(st, vehicles);                     // create follow states
 
             }
         }
     }
 
-
+    /*
+     * Returns a state according to the algorithm
+     */
     public static State getAState() {
 
-        if (states.size() == 0) {
-            return null;
+        if (one_solution) {
+            if (solutions.size() == 1) return null;
+        }
+        //check end
+        if (algorithm == ALGORITHM.DFS) {
+            if (states_stack.empty()) return null;
+        } else {
+            if (states.size() == 0) return null;
         }
 
-        Collections.sort(states, new Comparator<State>() {
-            @Override
-            public int compare(State o1, State o2) {
-                if (o1.getCost() < o2.getCost()) {
-                    return -1;
-                } else {
-                    return 1;
+        if (algorithm == ALGORITHM.ASTAR) {
+
+            Collections.sort(states, new Comparator<State>() {
+                @Override
+                public int compare(State o1, State o2) {
+                    if (o1.getCost() < o2.getCost()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 }
-            }
-        });
+            });
+        } else if (algorithm == ALGORITHM.BB) {
+
+            Collections.sort(states, new Comparator<State>() {
+                @Override
+                public int compare(State o1, State o2) {
+                    if (o1.getTotalTime() < o2.getTotalTime()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        } else if (algorithm == ALGORITHM.DFS) {
+
+            return new State(states_stack.pop());
+        }
 
         return new State(states.remove(0));
     }

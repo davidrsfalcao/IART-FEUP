@@ -30,10 +30,6 @@
             <y>700</y>
         </point>
 
-        <point name="G">
-            <x>800</x>
-            <y>800</y>
-        </point>
 
         <point name="H">
             <x>220</x>
@@ -45,14 +41,9 @@
             <y>800</y>
         </point>
 
-        <point name="J">
-            <x>880</x>
+        <point name="W">
+            <x>480</x>
             <y>800</y>
-        </point>
-
-        <point name="K">
-            <x>800</x>
-            <y>730</y>
         </point>
 
         <point name="L">
@@ -60,10 +51,6 @@
             <y>800</y>
         </point>
 
-        <point name="M">
-            <x>850</x>
-            <y>890</y>
-        </point>
 
         <point name="N">
             <x>100</x>
@@ -149,17 +136,63 @@
             <name>Rua YD</name>
         </route>
 
+        <route>
+            <from>I</from>
+            <to>C</to>
+            <distance>100</distance>
+            <name>Rua YC</name>
+        </route>
+
+        <route>
+            <from>I</from>
+            <to>N</to>
+            <distance>100</distance>
+            <name>Rua NI</name>
+        </route>
+
+        <route>
+            <from>I</from>
+            <to>F</to>
+            <distance>100</distance>
+            <name>Rua FI</name>
+        </route>
+
+        <route>
+            <from>N</from>
+            <to>H</to>
+            <distance>100</distance>
+            <name>Rua NH</name>
+        </route>
+
+        <route>
+            <from>L</from>
+            <to>D</to>
+            <distance>100</distance>
+            <name>Rua LD</name>
+        </route>
+
+        <route>
+            <from>W</from>
+            <to>I</to>
+            <distance>100</distance>
+            <name>Rua WI</name>
+        </route>
+
+        <route>
+            <from>L</from>
+            <to>W</to>
+            <distance>100</distance>
+            <name>Rua WL</name>
+        </route>
 
     </routes>
 
 
     <groups>
-
         <people>
             <number>8</number>
             <location>D</location>
         </people>
-
 
     </groups>
 
@@ -170,13 +203,6 @@
             <velocity>6</velocity>
             <location>Y</location>
         </vehicle>
-
-        <vehicle name="vehicle 1">
-            <capacity>2</capacity>
-            <velocity>6</velocity>
-            <location>A</location>
-        </vehicle>
-
 
     </vehicles>
 

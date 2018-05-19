@@ -6,23 +6,21 @@ import utils.Reader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
-
-public class State  {
+public class State {
 
     private Graph graph;
     private ArrayList<People> groups_people;
     private ArrayList<Vehicle> vehicles;
 
-    private int lastMoved;                  // the index of the last moved vehicle
-    private int indexCount;                 // the index of the vehicle that is counting the distance
+    private int lastMoved;                      // the index of the last moved vehicle
+    private int indexCount;                     // the index of the vehicle that is counting the distance
     private int nextChange;
 
-    private Boolean[] movedVehicles;        // moved vehicles in a state
+    private Boolean[] movedVehicles;            // moved vehicles
 
-    private int totalTime;                  // total time
-    private double totalCost;                  // total cost
+    private int totalTime;                      // total time
+    private double totalCost;                   // prediction of the cost of the state until the solution (heuristic)
 
 
     public State(Graph graph, String filename) {
@@ -45,9 +43,9 @@ public class State  {
 
         lastMoved = -1;
         indexCount = 0;
-        nextChange=-1;
+        nextChange = -1;
         totalTime = 0;
-        totalCost=0;
+        totalCost = 0;
 
     }
 
@@ -146,19 +144,17 @@ public class State  {
                     nextChange = i;
                     return;
                 }
-
             }
         }
 
     }
-
 
     /*
      * Print intermediate state
      */
     public String toString() {
         String res = "";
-        /*for (Vehicle v : vehicles) {
+        for (Vehicle v : vehicles) {
             System.out.println(v.toString());
         }
         for (People p : groups_people) {
@@ -172,10 +168,7 @@ public class State  {
         for (int i = 0; i < movedVehicles.length; i++) {
             res += movedVehicles[i] + " ";
         }
-*/
-        System.out.print("state " );for (Vehicle v : vehicles) {
-            System.out.println(v.toString());
-        }
+
         return res;
     }
 
@@ -255,17 +248,16 @@ public class State  {
         //all moved - reset list
         Arrays.fill(movedVehicles, Boolean.FALSE);
 
-        if(nextChange!=-1){
+        if (nextChange != -1) {
             indexCount = nextChange;
-            nextChange=-1;
+            nextChange = -1;
         }
-
 
         return 0;
     }
 
     /*
-     * Increase the state total time
+     * State total time
      */
     public void addTime(int time) {
         totalTime += time;
@@ -275,28 +267,37 @@ public class State  {
         totalTime -= time;
     }
 
-    public int getTotalTime(){
+    public int getTotalTime() {
         return totalTime;
     }
 
+    /*
+     * State cost
+     */
     public void setCost(double c) {
-        totalCost=c;
+        totalCost = c;
     }
 
-    public double getCost( ) {
+    public double getCost() {
         return totalCost;
     }
 
+
     @Override
     public boolean equals(Object o) {
+
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         State myObject = (State) o;
 
-        for(int i=0; i<vehicles.size(); i++){
-            if(! vehicles.get(i).getFinalPath().equals(myObject.vehicles.get(i).getFinalPath())) return false;
+        for (int i = 0; i < vehicles.size(); i++) {
+            if (!vehicles.get(i).getFinalPath().equals(myObject.vehicles.get(i).getFinalPath())){
+                return false;
+            }
         }
+
         return true;
     }
 
@@ -304,7 +305,5 @@ public class State  {
     public int hashCode() {
         return "".hashCode();
     }
-
-
 
 }
