@@ -1,188 +1,320 @@
 <file>
     <points>
-        <point name="A">
+        <point name="A1">
+            <x>100</x>
+            <y>100</y>
+        </point>
+
+        <point name="A2">
+            <x>200</x>
+            <y>100</y>
+        </point>
+
+        <point name="A3">
+            <x>300</x>
+            <y>100</y>
+        </point>
+
+        <point name="A4">
+            <x>400</x>
+            <y>100</y>
+        </point>
+
+        <point name="A5">
+            <x>500</x>
+            <y>100</y>
+        </point>
+
+        <point name="A6">
+            <x>600</x>
+            <y>100</y>
+        </point>
+
+
+        <point name="B1">
             <x>200</x>
             <y>200</y>
         </point>
 
-        <point name="B">
-            <x>450</x>
-            <y>350</y>
-        </point>
-
-        <point name="C">
+        <point name="B2">
             <x>400</x>
             <y>200</y>
         </point>
 
-        <point name="D">
-            <x>700</x>
-            <y>500</y>
+        <point name="B3">
+            <x>500</x>
+            <y>200</y>
         </point>
 
-        <point name="E">
-            <x>200</x>
-            <y>350</y>
-        </point>
-
-        <point name="F">
-            <x>100</x>
-            <y>700</y>
-        </point>
-
-
-        <point name="H">
-            <x>220</x>
-            <y>700</y>
-        </point>
-
-        <point name="I">
-            <x>290</x>
-            <y>800</y>
-        </point>
-
-        <point name="W">
-            <x>480</x>
-            <y>800</y>
-        </point>
-
-        <point name="L">
-            <x>850</x>
-            <y>800</y>
-        </point>
-
-
-        <point name="N">
-            <x>100</x>
-            <y>900</y>
-        </point>
-
-        <point name="X">
-            <x>450</x>
-            <y>250</y>
-        </point>
-
-        <point name="Y">
+        <point name="B4">
             <x>600</x>
             <y>200</y>
         </point>
 
+        <point name="C1">
+            <x>100</x>
+            <y>300</y>
+        </point>
+
+        <point name="C2">
+            <x>300</x>
+            <y>300</y>
+        </point>
+
+        <point name="C3">
+            <x>600</x>
+            <y>300</y>
+        </point>
+
+
+        <point name="D1">
+            <x>200</x>
+            <y>400</y>
+        </point>
+
+        <point name="D2">
+            <x>400</x>
+            <y>400</y>
+        </point>
+
+        <point name="D3">
+            <x>500</x>
+            <y>400</y>
+        </point>
+
+        <point name="E1">
+            <x>100</x>
+            <y>500</y>
+        </point>
+
+        <point name="E2">
+            <x>300</x>
+            <y>500</y>
+        </point>
+
+        <point name="E3">
+            <x>500</x>
+            <y>500</y>
+        </point>
+
+        <point name="F1">
+            <x>300</x>
+            <y>600</y>
+        </point>
+
+        <point name="F2">
+            <x>400</x>
+            <y>600</y>
+        </point>
+
+        <point name="F3">
+            <x>500</x>
+            <y>600</y>
+        </point>
+
+        <point name="F4">
+            <x>600</x>
+            <y>600</y>
+        </point>
+
     </points>
 
-    <safe_point>H</safe_point>
+    <safe_point>B1</safe_point>
 
     <routes>
+
+
         <route>
-            <from>A</from>
-            <to>B</to>
-            <distance>100</distance>
-            <name>Rua AB</name>
+            <from>A1</from>
+            <to>A2</to>
+            <distance>150</distance>
+            <name>Rua A1A2</name>
         </route>
 
         <route>
-            <from>A</from>
-            <to>C</to>
-            <distance>100</distance>
-            <name>Rua AC</name>
+            <from>A2</from>
+            <to>B1</to>
+            <distance>150</distance>
+            <name>Rua A2B1</name>
         </route>
 
         <route>
-            <from>A</from>
-            <to>L</to>
-            <distance>100</distance>
-            <name>Rua AL</name>
+            <from>C1</from>
+            <to>B1</to>
+            <distance>150</distance>
+            <name>Rua C1B1</name>
         </route>
 
         <route>
-            <from>B</from>
-            <to>D</to>
-            <distance>100</distance>
-            <name>Rua BD</name>
+            <from>A2</from>
+            <to>A3</to>
+            <distance>150</distance>
+            <name>Rua A2A3</name>
         </route>
 
         <route>
-            <from>B</from>
-            <to>F</to>
-            <distance>100</distance>
-            <name>Rua BF</name>
+            <from>B1</from>
+            <to>C2</to>
+            <distance>150</distance>
+            <name>Rua B1C2</name>
         </route>
 
         <route>
-            <from>B</from>
-            <to>H</to>
-            <distance>100</distance>
-            <name>Rua BH</name>
+            <from>D2</from>
+            <to>C2</to>
+            <distance>150</distance>
+            <name>Rua C2D2</name>
         </route>
 
         <route>
-            <from>C</from>
-            <to>X</to>
-            <distance>100</distance>
-            <name>Rua CD</name>
+            <from>D2</from>
+            <to>E2</to>
+            <distance>150</distance>
+            <name>Rua D2E2</name>
+        </route>
+
+        <route>
+            <from>D1</from>
+            <to>E2</to>
+            <distance>150</distance>
+            <name>Rua D1E2</name>
+        </route>
+
+        <route>
+            <from>D1</from>
+            <to>E1</to>
+            <distance>150</distance>
+            <name>Rua D1E1</name>
+        </route>
+
+        <route>
+            <from>D1</from>
+            <to>C1</to>
+            <distance>150</distance>
+            <name>Rua D1C1</name>
+        </route>
+
+        <route>
+            <from>A3</from>
+            <to>B2</to>
+            <distance>150</distance>
+            <name>Rua A3B2</name>
         </route>
 
 
         <route>
-            <from>X</from>
-            <to>Y</to>
-            <distance>100</distance>
-            <name>Rua XY</name>
+            <from>B3</from>
+            <to>B2</to>
+            <distance>150</distance>
+            <name>Rua B2B3</name>
         </route>
 
         <route>
-            <from>Y</from>
-            <to>D</to>
-            <distance>100</distance>
-            <name>Rua YD</name>
+            <from>B3</from>
+            <to>C3</to>
+            <distance>150</distance>
+            <name>Rua B3C3</name>
         </route>
 
         <route>
-            <from>I</from>
-            <to>C</to>
-            <distance>100</distance>
-            <name>Rua YC</name>
+            <from>D3</from>
+            <to>C3</to>
+            <distance>150</distance>
+            <name>Rua D3C3</name>
         </route>
 
         <route>
-            <from>I</from>
-            <to>N</to>
-            <distance>100</distance>
-            <name>Rua NI</name>
+            <from>A6</from>
+            <to>B3</to>
+            <distance>150</distance>
+            <name>Rua B3A6</name>
         </route>
 
         <route>
-            <from>I</from>
-            <to>F</to>
-            <distance>100</distance>
-            <name>Rua FI</name>
+            <from>A6</from>
+            <to>A5</to>
+            <distance>150</distance>
+            <name>Rua A6A5</name>
         </route>
 
         <route>
-            <from>N</from>
-            <to>H</to>
-            <distance>100</distance>
-            <name>Rua NH</name>
+            <from>B2</from>
+            <to>A5</to>
+            <distance>150</distance>
+            <name>Rua A5B2</name>
+        </route>
+
+
+        <route>
+            <from>B3</from>
+            <to>B4</to>
+            <distance>150</distance>
+            <name>Rua B3B4</name>
+        </route>
+
+
+        <route>
+            <from>D2</from>
+            <to>E3</to>
+            <distance>150</distance>
+            <name>Rua D2E3</name>
+        </route>
+
+
+        <route>
+            <from>D3</from>
+            <to>E3</to>
+            <distance>150</distance>
+            <name>Rua D3E3</name>
         </route>
 
         <route>
-            <from>L</from>
-            <to>D</to>
-            <distance>100</distance>
-            <name>Rua LD</name>
+            <from>D3</from>
+            <to>D2</to>
+            <distance>150</distance>
+            <name>Rua D2D3</name>
         </route>
 
         <route>
-            <from>W</from>
-            <to>I</to>
-            <distance>100</distance>
-            <name>Rua WI</name>
+            <from>E3</from>
+            <to>F2</to>
+            <distance>150</distance>
+            <name>Rua E3F2</name>
         </route>
 
         <route>
-            <from>L</from>
-            <to>W</to>
-            <distance>100</distance>
-            <name>Rua WL</name>
+            <from>A4</from>
+            <to>B2</to>
+            <distance>150</distance>
+            <name>Rua A4B2</name>
+        </route>
+
+        <route>
+            <from>E3</from>
+            <to>F3</to>
+            <distance>150</distance>
+            <name>Rua E3F3</name>
+        </route>
+
+        <route>
+            <from>F4</from>
+            <to>F3</to>
+            <distance>150</distance>
+            <name>Rua F4F3</name>
+        </route>
+
+        <route>
+            <from>F1</from>
+            <to>F2</to>
+            <distance>150</distance>
+            <name>Rua F1F2</name>
+        </route>
+
+        <route>
+            <from>F1</from>
+            <to>E2</to>
+            <distance>150</distance>
+            <name>Rua F1E2</name>
         </route>
 
     </routes>
@@ -191,10 +323,8 @@
     <groups>
         <people>
             <number>8</number>
-            <location>D</location>
-
+            <location>D1</location>
         </people>
-
     </groups>
 
 
@@ -202,7 +332,7 @@
         <vehicle name="vehicle 1">
             <capacity>5</capacity>
             <velocity>6</velocity>
-            <location>Y</location>
+            <location>A1</location>
         </vehicle>
 
     </vehicles>

@@ -9,6 +9,8 @@ import utils.Utils;
 
 import java.util.*;
 
+import static java.lang.Math.sqrt;
+
 
 public class Search {
 
@@ -217,8 +219,10 @@ public class Search {
         double x = Math.pow(destination.getX() - currentNode.getX(), 2.0);
         double y = Math.pow(destination.getX() - currentNode.getX(), 2.0);
 
-        return x + y;
+        return sqrt(x + y);
     }
+
+
 
     /*
      * Computes the heuristic for a state
@@ -238,7 +242,7 @@ public class Search {
 
                 double dist = calculate_distance(safe_p, search);
 
-                sum += dist * 100; //edge cost
+                sum += dist; //edge cost
 
             }
 
@@ -252,7 +256,7 @@ public class Search {
 
                 double dist = calculate_distance(safe_p, search);
 
-                sum += dist * 100;
+                sum += dist;
 
             }
 

@@ -99,9 +99,9 @@ public class Graph {
 
         /* create a layout */
         StaticLayout<String, String> layout = new StaticLayout<String, String>(g, locationTransformer);
-        layout.setSize(new Dimension(1000, 1000));
+        layout.setSize(new Dimension(700, 700));
         VisualizationViewer<String, String> vv = new VisualizationViewer<String, String>(layout);
-        vv.setPreferredSize(new Dimension(1000, 1000));
+        vv.setPreferredSize(new Dimension(700, 700));
 
 
         /* print route distance in edges */
